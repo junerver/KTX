@@ -1,22 +1,29 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id("com.android.library")
+    kotlin("android")
     id("maven-publish")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+android{
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation ("androidx.appcompat:appcompat:1.4.1")
 }
 
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                from(components["java"])
+                from(components["release"])
                 groupId = "com.edusoa.android.kotlin"
                 artifactId = "ktx"
-                version = "0.0.1"
+                version = "0.0.2"
             }
         }
         repositories {

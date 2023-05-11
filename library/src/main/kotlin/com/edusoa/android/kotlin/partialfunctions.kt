@@ -1,4 +1,4 @@
-package com.edusoa.android.library
+package com.edusoa.android.kotlin
 
 /*
  * Copyright 2013 - 2016 Mario Arias

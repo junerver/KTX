@@ -1,7 +1,7 @@
 package com.edusoa.android.edusoaktx
 
-import com.edusoa.android.library.orElse
-import com.edusoa.android.library.toPartialFunction
+import com.edusoa.android.kotlin.orElse
+import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
