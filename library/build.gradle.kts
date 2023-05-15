@@ -4,8 +4,11 @@ plugins {
     id("maven-publish")
 }
 
-android{
+android {
     compileSdk = 33
+    defaultConfig {
+        minSdk = 21
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -13,7 +16,7 @@ android{
 }
 
 dependencies {
-    implementation ("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.4.1")
 }
 
 afterEvaluate {

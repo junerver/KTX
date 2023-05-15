@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -122,7 +121,6 @@ fun Context.density(): Float {
 /**
  * 检查设备是否有虚拟键盘
  */
-@RequiresApi(Build.VERSION_CODES.CUPCAKE)
 fun Context.checkDeviceHasNavigationBar(): Boolean {
     var hasNavigationBar = false
     val rs = this.resources
