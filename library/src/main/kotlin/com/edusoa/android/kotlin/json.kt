@@ -1,3 +1,5 @@
+@file: JvmName(" json")
+
 package com.edusoa.android.kotlin
 
 import org.json.JSONArray
@@ -31,7 +33,7 @@ class JsonObjectBuilder {
             is Function0<*> -> json { value.invoke() }
             //只有array or list 会被转换成jsonArray
             is List<*> -> JSONArray().apply { value.forEach { put(it) } }
-            is Array<*>  -> JSONArray().apply { value.forEach { put(it) } }
+            is Array<*> -> JSONArray().apply { value.forEach { put(it) } }
             else -> value
         }
 

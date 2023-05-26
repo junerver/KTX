@@ -1,3 +1,5 @@
+@file: JvmName(" std")
+
 package com.edusoa.android.kotlin
 
 /**
@@ -9,4 +11,8 @@ package com.edusoa.android.kotlin
  */
 fun <T, R> T.runIf(condition: Boolean = true, block: T.() -> R) = run {
     block.takeIf { condition }?.invoke(this)
+}
+
+fun <T, R> T.runUnless(condition: Boolean = true, block: T.() -> R) = run {
+    block.takeUnless { condition }?.invoke(this)
 }

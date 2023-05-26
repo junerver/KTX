@@ -1,3 +1,5 @@
+@file: JvmName(" context")
+
 package com.edusoa.android.kotlin
 
 import android.content.Context
@@ -106,7 +108,11 @@ fun Context.versionCode(): Int {
  * @return version name
  */
 fun Context.versionName(): String {
-    return packageManager.getPackageInfo(packageName, 0).versionName
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).versionName
+    } else {
+        packageManager.getPackageInfo(packageName, 0).versionName
+    }
 }
 
 /**

@@ -1,3 +1,5 @@
+@file: JvmName(" partialfunctions")
+
 package com.edusoa.android.kotlin
 
 /*
@@ -20,9 +22,12 @@ package com.edusoa.android.kotlin
  * 源码来自：https://github.com/MarioAriasC/funKTionale/blob/master/funktionale-utils/src/main/kotlin/org/funktionale/utils/partialfunctions.kt
  * 虽然他称之为偏函数，实际不是，看起来更像是一个约定，可以用于实现责任链，他的实现思想参考了偏函数
  */
-class PartialFunction<in P1, out R>(private val definetAt: (P1) -> Boolean, private val f: (P1) -> R) :(P1) -> R {
+class PartialFunction<in P1, out R>(
+    private val definetAt: (P1) -> Boolean,
+    private val f: (P1) -> R
+) : (P1) -> R {
     override fun invoke(p1: P1): R {
-        if(definetAt(p1)) {
+        if (definetAt(p1)) {
             return f(p1)
         } else {
             throw IllegalArgumentException("Value: ($p1) isn't supported by this function")
