@@ -1,5 +1,3 @@
-@file: JvmName(" partialfunctions")
-
 package com.edusoa.android.kotlin
 
 /*

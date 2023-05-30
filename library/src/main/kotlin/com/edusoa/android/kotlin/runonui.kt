@@ -1,5 +1,3 @@
-@file: JvmName(" runonui")
-
 package com.edusoa.android.kotlin
 
 import android.app.Activity

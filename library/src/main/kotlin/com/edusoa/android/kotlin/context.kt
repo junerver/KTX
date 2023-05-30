@@ -1,5 +1,3 @@
-@file: JvmName(" context")
-
 package com.edusoa.android.kotlin
 
 import android.content.Context

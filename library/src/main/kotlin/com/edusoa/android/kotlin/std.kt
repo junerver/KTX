@@ -1,5 +1,3 @@
-@file: JvmName(" std")
-
 package com.edusoa.android.kotlin
 
 /**
