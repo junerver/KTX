@@ -1,10 +1,11 @@
 package com.edusoa.android.kotlin
 
-import android.util.Base64
 import java.net.URLEncoder
 import java.util.regex.Pattern
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**
  * Description:
@@ -167,7 +168,8 @@ fun String.toBase64(): String = this.toByteArray().toBase64()
 fun stringToBase64(string: String): String = string.toBase64()
 
 //base64字符串 转码为BA
-fun String.base64toByteArray(): ByteArray = Base64.decode(this, Base64.NO_WRAP)
+@OptIn(ExperimentalEncodingApi::class)
+fun String.base64toByteArray(): ByteArray = Base64.decode(this)
 
 //base64字符串直接解码为普通字符串
 fun String.decodeBase64(): String = String(this.base64toByteArray())

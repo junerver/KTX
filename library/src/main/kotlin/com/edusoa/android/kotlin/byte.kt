@@ -1,7 +1,8 @@
 package com.edusoa.android.kotlin
 
-import android.util.Base64
 import java.nio.ByteBuffer
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**
  * Description:
@@ -18,4 +19,8 @@ fun bytebuffer2ByteArray(buffer: ByteBuffer): ByteArray =
 fun ByteBuffer.toByteArray(): ByteArray = bytebuffer2ByteArray(this)
 
 //ba转base64
-fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
+@OptIn(ExperimentalEncodingApi::class)
+fun ByteArray.toBase64(): String = Base64.encode(this)
+
+@OptIn(ExperimentalEncodingApi::class)
+fun ByteArray.decodeBase64(): ByteArray = Base64.decode(this)

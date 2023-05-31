@@ -20,19 +20,23 @@ import kotlin.contracts.contract
  * ```
  * 之所以写这个函数是因为 `if-else` 表达式支持赋值但是 `if` 不支持
  */
+@OptIn(ExperimentalContracts::class)
 public inline fun <T, R> T.runIf(condition: Boolean = true, noinline block: T.() -> R): R? {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+        returnsNotNull() implies condition
     }
-    return run { block.takeIf { condition }?.invoke(this) }
+    return this.run { block.takeIf { condition }?.invoke(this) }
 }
 
 /**
  * 与上面的效果相反，条件达成则不执行，条件为否定时执行闭包
  */
+@OptIn(ExperimentalContracts::class)
 public inline fun <T, R> T.runUnless(condition: Boolean = true, noinline block: T.() -> R): R? {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+        returnsNotNull() implies !condition
     }
-    return run { block.takeUnless { condition }?.invoke(this) }
+    return this.run { block.takeUnless { condition }?.invoke(this) }
 }
