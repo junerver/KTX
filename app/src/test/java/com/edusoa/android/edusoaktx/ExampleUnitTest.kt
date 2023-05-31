@@ -1,9 +1,14 @@
 package com.edusoa.android.edusoaktx
 
 import com.edusoa.android.kotlin.orElse
+import com.edusoa.android.kotlin.runIf
+import com.edusoa.android.kotlin.runUnless
+import com.edusoa.android.kotlin.toBase64
 import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -36,6 +41,16 @@ class ExampleUnitTest {
 //        applyChain(Event(101,"code 101"))
 
     }
+
+    @Test
+    fun testRunIf() {
+        val a = runIf { "xxxx"  }
+        val b = runUnless { "aaaaa" }
+        println(a)
+        println(b)
+    }
+
+
 
     data class Event(val code: Int, val msg: String)
 

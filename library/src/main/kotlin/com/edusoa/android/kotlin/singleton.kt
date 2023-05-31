@@ -1,3 +1,5 @@
+@file: JvmName("-singleton")
+
 package com.edusoa.android.kotlin
 
 /**

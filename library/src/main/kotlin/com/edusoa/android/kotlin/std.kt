@@ -1,5 +1,7 @@
 @file:OptIn(ExperimentalContracts::class)
 
+@file: JvmName("-std")
+
 package com.edusoa.android.kotlin
 
 import kotlin.contracts.ExperimentalContracts

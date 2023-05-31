@@ -1,3 +1,5 @@
+@file: JvmName("-activity")
+
 package com.edusoa.android.kotlin
 
 import android.app.Activity

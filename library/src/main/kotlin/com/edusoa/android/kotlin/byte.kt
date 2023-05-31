@@ -1,3 +1,5 @@
+@file: JvmName("-byte")
+
 package com.edusoa.android.kotlin
 
 import java.nio.ByteBuffer

@@ -1,3 +1,5 @@
+@file: JvmName("-json")
+
 package com.edusoa.android.kotlin
 
 import org.json.JSONArray
