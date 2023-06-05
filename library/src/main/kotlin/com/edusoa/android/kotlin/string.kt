@@ -1,3 +1,5 @@
+@file: JvmName("-string")
+
 package com.edusoa.android.kotlin
 
 import java.net.URLEncoder
@@ -7,15 +9,16 @@ import kotlin.contracts.contract
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-/**
- * Description:
- * @author Junerver
- * date: 2023/5/12-13:52
- * Email: junerver@gmail.com
- * Version: v1.0
- */
 
-//region String 扩展
+val String.isDigitOnly: Boolean
+    get() = matches(Regex("^\\d*\$"))
+
+val String.isAlphabeticOnly: Boolean
+    get() = matches(Regex("^[a-zA-Z]*\$"))
+
+val String.isAlphanumericOnly: Boolean
+    get() = matches(Regex("^[a-zA-Z\\d]*\$"))
+
 /**
  * Description: 校验是否为合法文件名
  * @author Junerver

@@ -17,6 +17,7 @@ android {
 
 dependencies {
     implementation("androidx.appcompat:appcompat:1.4.1")
+    api("io.arrow-kt:arrow-core:1.2.0-RC")
 }
 
 afterEvaluate {
@@ -26,7 +27,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.edusoa.android.kotlin"
                 artifactId = "ktx"
-                version = "0.0.4"
+                version = "0.0.6"
             }
         }
         repositories {

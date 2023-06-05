@@ -5,6 +5,8 @@ package com.edusoa.android.kotlin
 import android.app.Activity
 import android.os.Build
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 
 /**
  * Description:
@@ -14,7 +16,6 @@ import android.view.View
  * Version: v1.0
  */
 
-//region Activity扩展
 /**
  * @Description 隐藏Act的底部虚拟键盘
  * @Author Junerver
@@ -33,6 +34,23 @@ fun Activity.hideBottomUIMenu() {
         val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN)
         decorView.systemUiVisibility = uiOptions
+    }
+}
+
+//region 隐藏用户键盘
+fun Activity.hideKeyboard() {
+    val imm: InputMethodManager =
+        getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    val view = currentFocus ?: View(this)
+    imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+}
+
+fun Fragment.hideKeyboard() {
+    activity?.apply {
+        val imm: InputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus ?: View(this)
+        imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 }
 //endregion

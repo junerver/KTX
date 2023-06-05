@@ -42,3 +42,10 @@ public inline fun <T, R> T.runUnless(condition: Boolean = true, noinline block: 
     }
     return this.run { block.takeUnless { condition }?.invoke(this) }
 }
+
+/**
+ * 全局的空判断扩展属性，这样做空判断时更为优雅
+ */
+val Any?.isNull get() = this == null
+
+val Any?.isNotNull get() = this != null

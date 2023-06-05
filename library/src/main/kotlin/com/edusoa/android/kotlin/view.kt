@@ -1,10 +1,11 @@
+@file: JvmName("-view")
+
 package com.edusoa.android.kotlin
 
 
 import android.view.View
 
 
-//region convert扩展
 /**
  * dp转px
  */
@@ -25,19 +26,15 @@ fun View.px2dp(pxValue: Float): Float {
 fun View.sp2px(spValue: Float): Float {
     return (spValue * this.resources.displayMetrics.scaledDensity + 0.5f)
 }
-//endregion
 
-
-
-const val TAG = "Extensions"
-
-
-//region view扩展
-inline fun View.setSingleClickListener(crossinline block: (View) -> Unit) {
+/**
+ * 一个防抖的点击事件
+ */
+inline fun View.setSingleClickListener(wait: Int = 500, crossinline block: (View) -> Unit) {
     var lastTime = 0L
     setOnClickListener {
         try {
-            if (System.currentTimeMillis() - lastTime < 1500) return@setOnClickListener
+            if (System.currentTimeMillis() - lastTime < wait) return@setOnClickListener
             block(it)
         } finally {
             lastTime = System.currentTimeMillis()
@@ -45,9 +42,12 @@ inline fun View.setSingleClickListener(crossinline block: (View) -> Unit) {
     }
 }
 
+//region 可见性扩展函数
 fun View.gone() {
     this.visibility = View.GONE
 }
+
+infix fun View.goneIf(condition: Boolean) = runIf(condition) { this.gone() }
 
 fun gones(vararg views: View?) {
     views.forEach {
@@ -59,6 +59,8 @@ fun View.invisible() {
     this.visibility = View.INVISIBLE
 }
 
+infix fun View.invisibleIf(condition: Boolean) = runIf(condition) { this.invisible() }
+
 fun invisibles(vararg views: View) {
     views.forEach {
         it.invisible()
@@ -69,12 +71,11 @@ fun View.visible() {
     this.visibility = View.VISIBLE
 }
 
+infix fun View.visibleIf(condition: Boolean) = runIf(condition) { this.visible() }
+
 fun visibles(vararg views: View) {
     views.forEach {
         it.visible()
     }
 }
 //endregion
-
-
-
