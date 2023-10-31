@@ -3,6 +3,7 @@ package com.edusoa.android.edusoaktx
 import com.edusoa.android.kotlin.lazy.ManagedResettableLazy
 import com.edusoa.android.kotlin.lazy.managedLazy
 import com.edusoa.android.kotlin.lazy.resettableLazy
+import com.edusoa.android.kotlin.lazy.resettableManager
 import com.edusoa.android.kotlin.orElse
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
@@ -45,19 +46,33 @@ class ExampleUnitTest {
 
     @Test
     fun testLazy() {
-        val resettableDelegate = resettableLazy {
-            Event(1,"2"+ Random(1))
-        }
-        val readOnly by resettableDelegate
-        println(readOnly)
-        resettableDelegate.reset()
-        println(readOnly)
+//        val resettableDelegate = resettableLazy {
+//            Event(1,"2"+ Random(1))
+//        }
+//        val readOnly by resettableDelegate
+//        println(readOnly)
+//        //通过delegate对象实现reset，从而再次调用初始化函数
+//        resettableDelegate.reset()
+//        println(readOnly)
+//
+//        val bean by managedLazy { Event(1, "2" + Random(1)) }
+//        println(bean)
+//        println(bean)
+//        //默认管理器时，通过单例函数重置
+//        ManagedResettableLazy.reset()
+//        println(bean)
 
-        val bean by managedLazy { Event(1, "2" + Random(1)) }
-        println(bean)
-        println(bean)
+        val m = resettableManager()
+        val bean1 by managedLazy(m){Event(1, "2" + Random(1)) }
+        val bean2 by managedLazy(m){Event(1, "2" + Random(1)) }
+        println(bean1)
+        println(bean1)
+        println(bean2)
+        println(bean2)
+        m.reset()
         ManagedResettableLazy.reset()
-        println(bean)
+        println(bean1)
+        println(bean2)
 
     }
 
