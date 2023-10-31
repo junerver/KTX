@@ -1,14 +1,16 @@
 package com.edusoa.android.edusoaktx
 
 import com.edusoa.android.kotlin.orElse
+import com.edusoa.android.kotlin.resettableLazy
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
-import com.edusoa.android.kotlin.toBase64
 import com.edusoa.android.kotlin.toPartialFunction
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import kotlin.io.encoding.Base64
-import kotlin.io.encoding.ExperimentalEncodingApi
+import kotlin.concurrent.timer
+import kotlin.random.Random
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -21,7 +23,7 @@ class ExampleUnitTest {
         assertEquals(4, 2 + 2)
         val handler1: (e: Event) -> Event = {
             println("handler1,${it.msg}")
-            Event(it.code,"handler by 1,${it.msg}")
+            Event(it.code, "handler by 1,${it.msg}")
         }
 
 
@@ -43,15 +45,31 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun testLazy() {
+        val resettableDelegate = resettableLazy {
+            Event(1,"2"+ Random(1))
+        }
+        val readOnly by resettableDelegate
+        println(readOnly)
+        resettableDelegate.reset()
+        println(readOnly)
+    }
+
+    @Test
     fun testRunIf() {
-        val a = runIf { "xxxx"  }
+        val a = runIf { "xxxx" }
         val b = runUnless { "aaaaa" }
         println(a)
         println(b)
+
     }
 
-
-
     data class Event(val code: Int, val msg: String)
+    open class Data {
+        protected open val value: Int = 0
+    }
 
+    class OwData : Data() {
+        public override val value: Int = 1
+    }
 }
