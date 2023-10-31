@@ -1,15 +1,14 @@
 package com.edusoa.android.edusoaktx
 
+import com.edusoa.android.kotlin.lazy.ManagedResettableLazy
+import com.edusoa.android.kotlin.lazy.managedLazy
+import com.edusoa.android.kotlin.lazy.resettableLazy
 import com.edusoa.android.kotlin.orElse
-import com.edusoa.android.kotlin.resettableLazy
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
 import com.edusoa.android.kotlin.toPartialFunction
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import kotlin.concurrent.timer
 import kotlin.random.Random
 
 /**
@@ -53,6 +52,13 @@ class ExampleUnitTest {
         println(readOnly)
         resettableDelegate.reset()
         println(readOnly)
+
+        val bean by managedLazy { Event(1, "2" + Random(1)) }
+        println(bean)
+        println(bean)
+        ManagedResettableLazy.reset()
+        println(bean)
+
     }
 
     @Test

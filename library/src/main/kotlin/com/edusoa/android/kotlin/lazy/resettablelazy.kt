@@ -1,4 +1,4 @@
-package com.edusoa.android.kotlin
+package com.edusoa.android.kotlin.lazy
 
 /**
  * Description: 一个简单实现的`resettableLazy`
