@@ -1,3 +1,4 @@
+@file: JvmName("-resettableLazy")
 package com.edusoa.android.kotlin.lazy
 
 /**
