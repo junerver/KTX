@@ -7,6 +7,7 @@ package com.edusoa.android.kotlin
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.reflect.typeOf
 
 
 /**
@@ -82,3 +83,10 @@ public inline fun <T> Boolean.switches(
     return if (this) ifTrue(this) else ifFalse(this)
 }
 
+/**
+ * 打印泛型
+ */
+inline fun <reified T> printType(@Suppress("UNUSED_PARAMETER") t: T) {
+    val type = typeOf<T>()
+    println(type)
+}

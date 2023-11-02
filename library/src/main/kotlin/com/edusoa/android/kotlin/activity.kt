@@ -3,10 +3,13 @@
 package com.edusoa.android.kotlin
 
 import android.app.Activity
-import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.core.content.getSystemService
 
 /**
  * Description:
@@ -25,15 +28,10 @@ import androidx.fragment.app.Fragment
  */
 fun Activity.hideBottomUIMenu() {
     //隐藏虚拟按键，并且全屏
-    if (Build.VERSION.SDK_INT in 12..18) { // lower api
-        val v = this.window.decorView
-        v.systemUiVisibility = View.GONE
-    } else if (Build.VERSION.SDK_INT >= 19) {
-        //for new api versions.
-        val decorView = window.decorView
-        val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN)
-        decorView.systemUiVisibility = uiOptions
+    WindowCompat.getInsetsController(window, window.decorView).apply {
+        hide(WindowInsetsCompat.Type.navigationBars())
+        hide(WindowInsetsCompat.Type.statusBars())
+        systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 }
 
@@ -47,10 +45,9 @@ fun Activity.hideKeyboard() {
 
 fun Fragment.hideKeyboard() {
     activity?.apply {
-        val imm: InputMethodManager =
-            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm: InputMethodManager? = getSystemService()
         val view = currentFocus ?: View(this)
-        imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        imm?.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 }
 //endregion

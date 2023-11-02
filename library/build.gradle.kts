@@ -16,8 +16,10 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     api("io.arrow-kt:arrow-core:1.2.0-RC")
+    api("androidx.core:core-ktx:1.10.1")
+    implementation(kotlin("reflect"))
 }
 
 afterEvaluate {

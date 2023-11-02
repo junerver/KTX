@@ -12,6 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EdusoaKTX"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="strValue"
+            android:value="MainActivity" />
+        <meta-data
+            android:name="intValue"
+            android:value="9"/>
+        <meta-data
+            android:name="floatValue"
+            android:value="9.99F"/>
+        <meta-data
+            android:name="longValue"
+            android:value="1234567890L"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

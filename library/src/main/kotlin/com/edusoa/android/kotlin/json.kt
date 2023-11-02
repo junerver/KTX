@@ -37,6 +37,6 @@ class JsonObjectBuilder {
             else -> value
         }
 
-        deque.peek().put(this, wrapped)
+        deque.peek()?.put(this, wrapped)
     }
 }

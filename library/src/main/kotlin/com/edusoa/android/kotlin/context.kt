@@ -3,6 +3,8 @@
 package com.edusoa.android.kotlin
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -18,9 +20,11 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.content.pm.PackageInfoCompat
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 
 /**
  * Description:
@@ -94,26 +98,42 @@ fun Context.statusBarHeight(): Int {
  *
  * @return version code
  */
-fun Context.versionCode(): Int {
-    return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-        packageManager.getPackageInfo(packageName, 0).versionCode
-    } else {
-        packageManager.getPackageInfo(packageName, 0).longVersionCode.toInt()
-    }
-}
+fun Context.versionCode(): Int = PackageInfoCompat.getLongVersionCode(getPackageInfo()).toInt()
 
 /**
  * 获取Version name
  *
  * @return version name
  */
-fun Context.versionName(): String {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).versionName
+fun Context.versionName(): String = getPackageInfo().versionName
+
+/**
+ * 获取packageInfo的兼容性扩展方法
+ */
+fun Context.getPackageInfo(flag: Long = 0): PackageInfo =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        packageManager.getPackageInfo(
+            packageName,
+            PackageManager.PackageInfoFlags.of(flag)
+        )
     } else {
-        packageManager.getPackageInfo(packageName, 0).versionName
+        @Suppress("DEPRECATION")
+        packageManager.getPackageInfo(packageName, flag.toInt())
     }
-}
+
+/**
+ * 获取applicationInfo的兼容性扩展方法
+ */
+fun Context.getApplicationInfo(flag: Long = 0): ApplicationInfo =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        packageManager.getApplicationInfo(
+            packageName,
+            PackageManager.ApplicationInfoFlags.of(flag)
+        )
+    } else {
+        @Suppress("DEPRECATION")
+        packageManager.getApplicationInfo(packageName, flag.toInt())
+    }
 
 /**
  * 获取像素密集度参数density
@@ -135,7 +155,7 @@ fun Context.checkDeviceHasNavigationBar(): Boolean {
     if (id > 0) {
         hasNavigationBar = rs.getBoolean(id)
     }
-    try {
+    runCatching {
         val systemPropertiesClass = Class.forName("android.os.SystemProperties")
         val m = systemPropertiesClass.getMethod("get", String::class.java)
         val navBarOverride = m.invoke(systemPropertiesClass, "qemu.hw.mainkeys") as String
@@ -144,8 +164,8 @@ fun Context.checkDeviceHasNavigationBar(): Boolean {
         } else if ("0" == navBarOverride) {
             hasNavigationBar = true
         }
-    } catch (e: Exception) {
-        Log.e("ContextExtend", "检查虚拟键盘：")
+    }.onFailure {
+        Log.e("ContextExtend", "检查虚拟键盘：$it")
     }
     return hasNavigationBar
 }
@@ -202,16 +222,17 @@ fun Context.getUriForFile(file: File): Uri {
  * @return
  */
 inline fun <reified T> Context.getMetaData(key: String, def: T): T {
-    val applicationInfo =
-        this.packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
-    val data = applicationInfo.metaData.get(key)
-    return data?.let {
+    val applicationInfo = getApplicationInfo(PackageManager.GET_META_DATA.toLong())
+    val metadata = applicationInfo.metaData
+    return with(metadata) {
         when (T::class) {
-            Int::class, String::class, Float::class, Boolean::class -> it
-            Long::class -> (data as Float).toLong() //存储时以float类型保存
+            Int::class -> getInt(key, def as Int)
+            String::class -> getString(key, def as String)
+            Float::class -> getFloat(key, def as Float)
+            Boolean::class -> getBoolean(key, def as Boolean)
             else -> throw IllegalArgumentException("META-DATA 类型错误")
         } as T
-    } ?: kotlin.run { def }
+    }
 }
 
 /**
@@ -227,24 +248,20 @@ inline fun <reified T> Context.getMetaData(key: String, def: T): T {
  */
 @Throws(IOException::class)
 fun Context.copyAssetFile(assetName: String, savePath: String, saveName: String) {
-    val dir = File(savePath)
-    if (!dir.exists()) {
-        dir.mkdirs()
-    }
-    val dbf = File(savePath + saveName)
-    if (dbf.exists()) {
-        dbf.delete()
-    }
+    //保存路径不存在则创建
+    File(savePath).takeIf { !it.exists() }?.mkdir()
+    //目标文件如果存在则删除
+    File(savePath + saveName).takeIf { it.exists() }?.delete()
     val outFileName = savePath + saveName
-    val myOutput = FileOutputStream(outFileName)
-    val myInput = this.assets.open(assetName)
-    val buffer = ByteArray(1024)
-    var length: Int
-    while (myInput.read(buffer).also { length = it } > 0) {
-        myOutput.write(buffer, 0, length)
+    FileOutputStream(outFileName).use { outputStream: FileOutputStream ->
+        this.assets.open(assetName).use { inputStream: InputStream ->
+            val buffer = ByteArray(1024)
+            var length: Int
+            while (inputStream.read(buffer).also { length = it } > 0) {
+                outputStream.write(buffer, 0, length)
+            }
+            outputStream.flush()
+        }
     }
-    myOutput.flush()
-    myInput.close()
-    myOutput.close()
 }
 //endregion

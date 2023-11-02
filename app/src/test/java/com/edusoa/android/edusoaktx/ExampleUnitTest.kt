@@ -6,10 +6,12 @@ import arrow.core.left
 import arrow.core.memoize
 import arrow.core.recover
 import arrow.core.right
+import com.edusoa.android.kotlin.arrow.toEither
 import com.edusoa.android.kotlin.lazy.ManagedResettableLazy
 import com.edusoa.android.kotlin.lazy.managedLazy
 import com.edusoa.android.kotlin.lazy.resettableManager
 import com.edusoa.android.kotlin.orElse
+import com.edusoa.android.kotlin.printType
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
 import com.edusoa.android.kotlin.switches
@@ -17,6 +19,7 @@ import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.random.Random
+import kotlin.reflect.typeOf
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -143,6 +146,10 @@ class ExampleUnitTest {
 //        val x = "hello".left()
 //        val value = x.getOrElse { "$it world!" }
 //        println("value = $value")
+        val e1 = true.toEither()
+        val e2 = false.toEither()
+        assertEquals(e1.isRight(), true)
+        assertEquals(e2.isRight(), false)
 
         //被除数为0 left
         fun divide(a: Int, b: Int): Either<String, Int> =
@@ -156,24 +163,20 @@ class ExampleUnitTest {
             if (n == 3) (n * Math.PI).right() else "error != 3__".left()
 
         val result2 = divide(10, 1)
-            .flatMap(::f1) //此时将会变轨为left(10)
+            .flatMap(::f1) //此时将会变轨为left("error = 10")
             .recover<String, Double, Int> {
-                //触发变轨，变轨后结果为 right(3)
-                println(it)
-                raise((it.length / 3).toDouble())
-            }.flatMap(::f2)
+                //触发变轨，使用raise变轨到新的left错误类型 string -> double
+                raise((it.length / 3).toDouble()) //变轨后结果为 left(3.0)
+            }.recover<Double, String, Int> {
+                it.toInt() //普通变轨，不使用raise，将会变轨成right正确类型
+            }.flatMap(::f2) //入参为3，最终结果为右值 3*PI
 
-        println(result2)
 
-        val transformedResult: Either<String, Any> = result2.mapLeft { error ->
-            "An error occurred: $error"
-        }
-
-        when (transformedResult) {
-            is Either.Right -> println("Result: ${transformedResult.value}")
-            is Either.Left -> println("Error: ${transformedResult.value}")
-        }
+        assertEquals(result2.isRight(), true)
+        printType(result2)
     }
+
+
 
 
     @Test

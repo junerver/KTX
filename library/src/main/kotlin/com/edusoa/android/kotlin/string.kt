@@ -1,4 +1,7 @@
 @file: JvmName("-string")
+@file:Suppress("RegExpRedundantEscape", "RegExpDuplicateCharacterInClass",
+    "RegExpUnnecessaryNonCapturingGroup"
+)
 
 package com.edusoa.android.kotlin
 
@@ -10,12 +13,21 @@ import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 
+/**
+ * 仅数字
+ */
 val String.isDigitOnly: Boolean
     get() = matches(Regex("^\\d*\$"))
 
+/**
+ * 仅字母
+ */
 val String.isAlphabeticOnly: Boolean
     get() = matches(Regex("^[a-zA-Z]*\$"))
 
+/**
+ * 仅数字+字母
+ */
 val String.isAlphanumericOnly: Boolean
     get() = matches(Regex("^[a-zA-Z\\d]*\$"))
 
@@ -108,7 +120,7 @@ fun String.safeConvertToShort(): Short {
 
 //首字母大写
 fun String.upperFirstLetter(): String {
-    return if (this.isNullOrEmpty()) {
+    return if (this.isEmpty()) {
         ""
     } else {
         if (!Character.isLowerCase(this[0])) return this
@@ -117,6 +129,9 @@ fun String.upperFirstLetter(): String {
 
 }
 
+/**
+ * url 字符串解码
+ */
 fun String.urlEncode(): String {
     val encode: String = URLEncoder.encode(this, "utf-8")
     return encode.replace("%3A", ":").replace("%2F", "/")
