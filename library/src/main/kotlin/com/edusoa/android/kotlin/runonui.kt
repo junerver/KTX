@@ -3,9 +3,9 @@
 package com.edusoa.android.kotlin
 
 import android.app.Activity
-import androidx.fragment.app.Fragment
 import android.os.Handler
 import android.os.Looper
+import androidx.fragment.app.Fragment
 
 /**
  * Description:

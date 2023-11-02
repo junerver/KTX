@@ -1,5 +1,6 @@
 @file: JvmName("-string")
-@file:Suppress("RegExpRedundantEscape", "RegExpDuplicateCharacterInClass",
+@file:Suppress(
+    "RegExpRedundantEscape", "RegExpDuplicateCharacterInClass",
     "RegExpUnnecessaryNonCapturingGroup"
 )
 

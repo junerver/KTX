@@ -4,6 +4,7 @@ package com.edusoa.android.kotlin
 
 /**
  * 使用方法：
+ * ```kotlin
  * class WorkSingleton private constructor(context: Context) {
  *
  *     companion object : SingletonHolder<WorkSingleton, Context>(::WorkSingleton)
@@ -12,6 +13,7 @@ package com.edusoa.android.kotlin
  *         // Init using context argument
  *     }
  * }
+ * ```
  */
 open class SingletonHolder<out T, in A>(creator: (A) -> T) {
     private var creator: ((A) -> T)? = creator

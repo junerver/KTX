@@ -4,6 +4,9 @@ package com.edusoa.android.kotlin
 
 
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 
 
 /**
@@ -44,7 +47,7 @@ inline fun View.setSingleClickListener(wait: Int = 500, crossinline block: (View
 
 //region 可见性扩展函数
 fun View.gone() {
-    this.visibility = View.GONE
+    this.isGone = true
 }
 
 infix fun View.goneIf(condition: Boolean) = runIf(condition) { this.gone() }
@@ -56,7 +59,7 @@ fun gones(vararg views: View?) {
 }
 
 fun View.invisible() {
-    this.visibility = View.INVISIBLE
+    this.isInvisible = true
 }
 
 infix fun View.invisibleIf(condition: Boolean) = runIf(condition) { this.invisible() }
@@ -68,7 +71,7 @@ fun invisibles(vararg views: View) {
 }
 
 fun View.visible() {
-    this.visibility = View.VISIBLE
+    this.isVisible = true
 }
 
 infix fun View.visibleIf(condition: Boolean) = runIf(condition) { this.visible() }

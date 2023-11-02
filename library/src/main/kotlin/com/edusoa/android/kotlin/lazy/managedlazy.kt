@@ -1,4 +1,5 @@
 @file: JvmName("-managedLazy")
+
 package com.edusoa.android.kotlin.lazy
 
 import com.edusoa.android.kotlin.lazy.ManagedResettableLazy.defaultManager

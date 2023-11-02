@@ -8,7 +8,10 @@ import android.widget.TextClock
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.edusoa.android.kotlin.SingletonHolder
+import com.edusoa.android.kotlin.fullScreen
 import com.edusoa.android.kotlin.getMetaData
+import com.edusoa.android.kotlin.hideBottomUIMenu
+import com.edusoa.android.kotlin.hideKeyboard
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.setSingleClickListener
 
@@ -22,8 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         }
         findViewById<Button>(R.id.btn_test).setSingleClickListener {
-
+            fullScreen()
         }
+
 
         runCatching{
             findViewById<TextView>(R.id.tv_content).apply {
