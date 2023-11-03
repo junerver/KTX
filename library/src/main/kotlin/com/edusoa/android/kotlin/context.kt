@@ -25,6 +25,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 
 /**
  * Description:
@@ -248,19 +249,27 @@ inline fun <reified T> Context.getMetaData(key: String, def: T): T {
  */
 @Throws(IOException::class)
 fun Context.copyAssetFile(assetName: String, savePath: String, saveName: String) {
+    val outFileName = savePath + saveName
     //保存路径不存在则创建
     File(savePath).takeIf { !it.exists() }?.mkdir()
     //目标文件如果存在则删除
-    File(savePath + saveName).takeIf { it.exists() }?.delete()
-    val outFileName = savePath + saveName
-    FileOutputStream(outFileName).use { outputStream: FileOutputStream ->
-        this.assets.open(assetName).use { inputStream: InputStream ->
+    File(outFileName).takeIf { it.exists() }?.delete()
+    this.assets.open(assetName) writeTo FileOutputStream(outFileName)
+}
+
+/**
+ * 由于一般的读写操作都是比较模板的代码，直接用这个中缀表达式更方便
+ */
+@Throws(IOException::class)
+internal infix fun InputStream.writeTo(outputStream: OutputStream) {
+    outputStream.use { out ->
+        this.use { input ->
             val buffer = ByteArray(1024)
             var length: Int
-            while (inputStream.read(buffer).also { length = it } > 0) {
-                outputStream.write(buffer, 0, length)
+            while (input.read(buffer).also { length = it } > 0) {
+                out.write(buffer, 0, length)
             }
-            outputStream.flush()
+            out.flush()
         }
     }
 }

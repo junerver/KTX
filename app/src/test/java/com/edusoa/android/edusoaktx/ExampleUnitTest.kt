@@ -4,6 +4,8 @@ import arrow.core.Either
 import arrow.core.flatMap
 import arrow.core.left
 import arrow.core.memoize
+import arrow.core.partially1
+import arrow.core.partially2
 import arrow.core.recover
 import arrow.core.right
 import com.edusoa.android.kotlin.arrow.toEither
@@ -203,6 +205,7 @@ class ExampleUnitTest {
         applyChain(Event(100, "code 100"))
         applyChain(Event(99, "code 99"))
 //        applyChain(Event(101,"code 101"))
+
 
     }
 
