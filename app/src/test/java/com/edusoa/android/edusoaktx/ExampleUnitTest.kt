@@ -4,10 +4,11 @@ import arrow.core.Either
 import arrow.core.flatMap
 import arrow.core.left
 import arrow.core.memoize
-import arrow.core.partially1
-import arrow.core.partially2
 import arrow.core.recover
 import arrow.core.right
+import com.edusoa.android.kotlin.EncryptUtils
+import com.edusoa.android.kotlin.EncryptUtils.decryptRsa
+import com.edusoa.android.kotlin.EncryptUtils.encryptRsa
 import com.edusoa.android.kotlin.arrow.toEither
 import com.edusoa.android.kotlin.lazy.ManagedResettableLazy
 import com.edusoa.android.kotlin.lazy.managedLazy
@@ -21,7 +22,6 @@ import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.random.Random
-import kotlin.reflect.typeOf
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -29,6 +29,20 @@ import kotlin.reflect.typeOf
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    @Test
+    fun testEncrypt() {
+//        EncryptUtils.privateKey =
+//            "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKS8d/UKp4c+vR6MgGacwmKAJYHIowHLbny70VSKES7H3FMYOr3tazsyYugnBuvr8GYEU4oEqxexTizfqu5iIwqXHL2gsd6fs2SeJdMD0osvuuyNdB5xklKBocClXPs9Od786LIF4BH4BZwm67wcqdFpJmE65lVUFmQh0Wnumm/fAgMBAAECgYAH3Nb84x1L3zq3ko0uWJ0Ohn9Dyoe9NjB3058SIeTgDrn9XVKwbfyIPsdpvTMfX4uB0wMJu19PKi9JBQPrjNOPQjZq4X4uQ98GwiHXdzyFkSEflQt/ECgTzojr0QtR64u9RjpRRQ06WYHZr7+o/hKzN4k7aXW0vDp9yUEdHZt7gQJBANffrkCONY3ARimdPN/w/qpZyMVFPKR6Js1QHDuA24me1R/Dpb30ixQBNqE0sxot6DKlJp6rIbHDdemtyO/aNrcCQQDDW2pj+xY+CdHBviTIjApr873LNHA70HsKW0VRDPxwXB3/4P886ZyZsFReUiVZQtgBwx2U8A4n89Rg0pNZtagZAkBil/qR6WF0OFjTMMlYzkzBqPgVgSXNSSznoKsEUjnyhOR5+XV9aG8M1/EHd3ZFgqoGV39oAGkHM2prK8AWK+fJAkBCQjsvdfXxTLtMDwXCz1ypiJ4S0dJPN0LEHHjCKLlmEphKNTHcow9uQRQceZgZUkaZMmhSH6lte5HI1SMNBkPhAkBupa0r4eLTlCIJqsMv2JqtBdDaQzBF8MYMa2HrrVFmcoclUMLNkAmPfry+0BNhJmFZc4NryE9rGSLA9b/xTb9Y"
+//        EncryptUtils.publicKey =
+//            "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCkvHf1CqeHPr0ejIBmnMJigCWByKMBy258u9FUihEux9xTGDq97Ws7MmLoJwbr6/BmBFOKBKsXsU4s36ruYiMKlxy9oLHen7NkniXTA9KLL7rsjXQecZJSgaHApVz7PTne/OiyBeAR+AWcJuu8HKnRaSZhOuZVVBZkIdFp7ppv3wIDAQAB"
+
+        val pass = "sss1893434"
+        val encrypt = pass.encryptRsa()
+        println(encrypt)
+        println(encrypt.decryptRsa())
+        assertEquals(pass, encrypt.decryptRsa())
+    }
 
     @Test
     fun testArrowMemoized() {
@@ -177,8 +191,6 @@ class ExampleUnitTest {
         assertEquals(result2.isRight(), true)
         printType(result2)
     }
-
-
 
 
     @Test
