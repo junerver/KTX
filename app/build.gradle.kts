@@ -8,7 +8,7 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.edusoa.android.edusoaktx"
+        applicationId = "com.edusoa.android.edusoaktxTEST"
         minSdk = 21
         targetSdk = 33
         versionCode = 1
