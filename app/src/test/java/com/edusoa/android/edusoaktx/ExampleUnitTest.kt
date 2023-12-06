@@ -18,6 +18,7 @@ import com.edusoa.android.kotlin.printType
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
 import com.edusoa.android.kotlin.switches
+import com.edusoa.android.kotlin.toHex
 import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -29,6 +30,23 @@ import kotlin.random.Random
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    @Test
+    fun testByA() {
+        val a = "a".toByteArray()
+        val b = "b".toByteArray()
+        val x = a + b
+        println(a.toHex())
+        println(b.toHex())
+        println(x.toHex())
+    }
+
+    @Test
+    fun testByte() {
+        val byteArray = "wo".toByteArray()
+        //参照：https://www.utf8-chartable.de/unicode-utf8-table.pl?utf8=dec
+        assertEquals(byteArray.toHex(), "77, 6f")
+    }
 
     @Test
     fun testEncrypt() {
