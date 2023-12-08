@@ -3,7 +3,7 @@
 package com.edusoa.android.kotlin
 
 /**
- * 使用方法：
+ * 单参数单例，使用方法：
  * ```kotlin
  * class WorkSingleton private constructor(context: Context) {
  *

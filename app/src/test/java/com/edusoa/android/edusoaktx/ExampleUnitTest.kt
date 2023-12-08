@@ -6,23 +6,34 @@ import arrow.core.left
 import arrow.core.memoize
 import arrow.core.recover
 import arrow.core.right
-import com.edusoa.android.kotlin.EncryptUtils
+import com.edusoa.android.kotlin.BuildUtil
 import com.edusoa.android.kotlin.EncryptUtils.decryptRsa
 import com.edusoa.android.kotlin.EncryptUtils.encryptRsa
+import com.edusoa.android.kotlin.are
 import com.edusoa.android.kotlin.arrow.toEither
+import com.edusoa.android.kotlin.base64toByteArray
+import com.edusoa.android.kotlin.decodeBase64
+import com.edusoa.android.kotlin.getBuildConfigValue
 import com.edusoa.android.kotlin.lazy.ManagedResettableLazy
 import com.edusoa.android.kotlin.lazy.managedLazy
 import com.edusoa.android.kotlin.lazy.resettableManager
+import com.edusoa.android.kotlin.md5
 import com.edusoa.android.kotlin.orElse
+import com.edusoa.android.kotlin.padLeft
 import com.edusoa.android.kotlin.printType
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
 import com.edusoa.android.kotlin.switches
+import com.edusoa.android.kotlin.toBase64
 import com.edusoa.android.kotlin.toHex
 import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.io.File
 import kotlin.random.Random
+import kotlin.system.measureNanoTime
+import kotlin.system.measureTimeMillis
+import kotlin.time.ExperimentalTime
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -30,6 +41,82 @@ import kotlin.random.Random
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun testFileEquals() {
+        val f1 = File("D:\\ftp_root\\ios3.ipa")
+        val f2 = File("D:\\ftp_root\\ios3.ipa")
+        val t1 = measureNanoTime {
+            repeat(10) {
+                f1 == f2
+            }
+        }
+        println("equales: $t1")
+        println(f1.md5)
+
+        val t2 = measureTimeMillis {
+            repeat(10) {
+                f1 are f2
+            }
+        }
+        println("are: $t2")
+
+        val t3 = measureTimeMillis {
+            repeat(10000) {
+                f1 are f2
+            }
+        }
+        println("are: $t3")
+    }
+
+    @Test
+    fun testBuildutil() {
+        BuildUtil.initPackageName("xxx")
+        getBuildConfigValue("test","")
+
+    }
+
+    @Test
+    fun testInline() {
+        println("===================start")
+        ablock({
+            println("====================1")
+            return@ablock
+        },{
+            println("====================2")
+            return@ablock
+        })
+        println("====================end")
+
+    }
+
+    inline fun ablock(noinline b1: () -> Unit, crossinline b2: () -> Unit) {
+        b1()
+        b2()
+    }
+
+
+    @Test
+    fun testBase64() {
+        // 原始数据
+        val or = "lalala"
+        // base64 编码
+        val b = or.toBase64()
+        // 解码后等同于原始数据
+        assertEquals(b.decodeBase64(), or)
+        //base64 还原成自己数组，等同于原始数据的字节数组
+        assertEquals(b.base64toByteArray().toHex(), or.toByteArray().toHex())
+    }
+
+
+    @Test
+    fun testPad() {
+        //左对齐
+        val l = "wo".padLeft(8, '0')
+        assertEquals(l, "wo000000")
+    }
+
 
     @Test
     fun testByA() {

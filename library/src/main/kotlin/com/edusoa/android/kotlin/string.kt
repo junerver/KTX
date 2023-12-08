@@ -139,39 +139,20 @@ fun String.urlEncode(): String {
 }
 
 /**
- * @作者 尧
- * @功能 String左对齐
+ * @author 尧
+ * String左对齐，废弃的函数，应该使用标准库实现
+ * @see [String.padStart]
  */
-fun String.padLeft(len: Int, ch: Char): String {
-    val diff = len - this.length
-    if (diff <= 0) {
-        return this
-    }
-    val chArr = CharArray(len)
-    System.arraycopy(this.toCharArray(), 0, chArr, 0, this.length)
-    for (i in this.length until len) {
-        chArr[i] = ch
-    }
-    return String(chArr)
-}
-
+@Deprecated("should use standard lib's 'padStart(len,ch)' to instead", ReplaceWith("this.padStart(len, ch)"))
+fun String.padLeft(len: Int, ch: Char): String = this.padStart(len, ch)
 
 /**
- * @作者 尧
- * @功能 String右对齐 向左侧补充字符
+ * @author 尧
+ * String右对齐，废弃的函数，应该使用标准库实现
+ * @see [String.padEnd]
  */
-fun String.padRight(len: Int, ch: Char): String {
-    val diff = len - this.length
-    if (diff <= 0) {
-        return this
-    }
-    val chArr = CharArray(len)
-    System.arraycopy(this.toCharArray(), 0, chArr, diff, this.length)
-    for (i in 0 until diff) {
-        chArr[i] = ch
-    }
-    return String(chArr)
-}
+@Deprecated("should use standard lib's 'padEnd(len,ch)' to instead", ReplaceWith("this.padEnd(len, ch)"))
+fun String.padRight(len: Int, ch: Char): String = this.padEnd(len, ch)
 
 @ExperimentalContracts
 fun String?.isNotNullOrEmpty(): Boolean {
@@ -184,11 +165,11 @@ fun String?.isNotNullOrEmpty(): Boolean {
 //字符串直接转换为Base64
 fun String.toBase64(): String = this.toByteArray().toBase64()
 
-fun stringToBase64(string: String): String = string.toBase64()
-
 //base64字符串 转码为BA
 @OptIn(ExperimentalEncodingApi::class)
 fun String.base64toByteArray(): ByteArray = Base64.decode(this)
 
-//base64字符串直接解码为普通字符串
+/**
+ * base64字符串直接解码为普通字符串，与函数[toBase64]互为逆操作
+ */
 fun String.decodeBase64(): String = String(this.base64toByteArray())
