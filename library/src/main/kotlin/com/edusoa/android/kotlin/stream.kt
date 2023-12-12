@@ -1,3 +1,5 @@
+@file: JvmName("-stream")
+
 package com.edusoa.android.kotlin
 
 import java.io.IOException

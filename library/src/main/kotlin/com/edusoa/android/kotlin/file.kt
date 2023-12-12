@@ -1,3 +1,5 @@
+@file: JvmName("-file")
+
 package com.edusoa.android.kotlin
 
 import java.io.File

@@ -50,11 +50,9 @@ fun View.gone() {
     this.isGone = true
 }
 
-infix fun View.goneIf(condition: Boolean) = runIf(condition) { this.gone() }
-
-fun gones(vararg views: View?) {
-    views.forEach {
-        it?.gone()
+fun Array<out View>.gone() {
+    this.forEach {
+        it.gone()
     }
 }
 
@@ -62,10 +60,8 @@ fun View.invisible() {
     this.isInvisible = true
 }
 
-infix fun View.invisibleIf(condition: Boolean) = runIf(condition) { this.invisible() }
-
-fun invisibles(vararg views: View) {
-    views.forEach {
+fun Array<out View>.invisible() {
+    this.forEach {
         it.invisible()
     }
 }
@@ -74,11 +70,21 @@ fun View.visible() {
     this.isVisible = true
 }
 
-infix fun View.visibleIf(condition: Boolean) = runIf(condition) { this.visible() }
-
-fun visibles(vararg views: View) {
-    views.forEach {
+fun Array<out View>.visible() {
+    this.forEach {
         it.visible()
     }
 }
+
+infix fun View.goneIf(condition: Boolean) = runIf(condition) { this.gone() }
+
+infix fun View.invisibleIf(condition: Boolean) = runIf(condition) { this.invisible() }
+
+infix fun View.visibleIf(condition: Boolean) = runIf(condition) { this.visible() }
+
+infix fun View.visibleOrInIf(condition: Boolean) =
+    if (condition) this.visible() else this.invisible()
+
+infix fun View.visibleOrGoneIf(condition: Boolean) = if (condition) this.visible() else this.gone()
+
 //endregion

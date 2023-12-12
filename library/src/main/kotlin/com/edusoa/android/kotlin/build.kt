@@ -1,3 +1,5 @@
+@file: JvmName("-build")
+
 package com.edusoa.android.kotlin
 
 import android.util.Log

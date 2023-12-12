@@ -1,5 +1,6 @@
 package com.edusoa.android.edusoaktx
 
+import android.graphics.Color
 import arrow.core.Either
 import arrow.core.flatMap
 import arrow.core.left
@@ -7,12 +8,13 @@ import arrow.core.memoize
 import arrow.core.recover
 import arrow.core.right
 import com.edusoa.android.kotlin.BuildUtil
-import com.edusoa.android.kotlin.EncryptUtils.decryptRsa
-import com.edusoa.android.kotlin.EncryptUtils.encryptRsa
+import com.edusoa.android.kotlin.ColorX
 import com.edusoa.android.kotlin.are
 import com.edusoa.android.kotlin.arrow.toEither
 import com.edusoa.android.kotlin.base64toByteArray
 import com.edusoa.android.kotlin.decodeBase64
+import com.edusoa.android.kotlin.decryptRsa
+import com.edusoa.android.kotlin.encryptRsa
 import com.edusoa.android.kotlin.getBuildConfigValue
 import com.edusoa.android.kotlin.lazy.ManagedResettableLazy
 import com.edusoa.android.kotlin.lazy.managedLazy
@@ -25,10 +27,13 @@ import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.runUnless
 import com.edusoa.android.kotlin.switches
 import com.edusoa.android.kotlin.toBase64
+import com.edusoa.android.kotlin.toColorX
 import com.edusoa.android.kotlin.toHex
 import com.edusoa.android.kotlin.toPartialFunction
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import java.io.File
 import kotlin.random.Random
 import kotlin.system.measureNanoTime
@@ -40,7 +45,17 @@ import kotlin.time.ExperimentalTime
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@RunWith(RobolectricTestRunner::class)
 class ExampleUnitTest {
+
+    @Test
+    fun testColor() {
+        val hex = ColorX("#ff0080")
+        val rgb = Triple(255, 128, 0)
+        println(rgb.toColorX().toColor())
+        println(rgb.toColorX())
+        assertEquals(rgb.toColorX().toColor(), Color.rgb(255,128,0))
+    }
 
     @OptIn(ExperimentalTime::class)
     @Test

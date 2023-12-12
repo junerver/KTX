@@ -2,23 +2,23 @@ package com.edusoa.android.edusoaktx
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager.GET_META_DATA
-import android.content.res.XmlResourceParser
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.edusoa.android.kotlin.BuildUtil
 import com.edusoa.android.kotlin.SingletonHolder
 import com.edusoa.android.kotlin.fullScreen
-import com.edusoa.android.kotlin.getBuildConfigValue
 import com.edusoa.android.kotlin.getMetaData
+import com.edusoa.android.kotlin.gone
+import com.edusoa.android.kotlin.goneIf
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.setSingleClickListener
+import com.edusoa.android.kotlin.visibleOrInIf
 
 
 private const val TAG = "MainActivity"
+
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,13 +27,23 @@ class MainActivity : AppCompatActivity() {
         runIf {
             TestSingleton.getInstance(this@MainActivity).print()
         }
-        findViewById<Button>(R.id.btn_test).setSingleClickListener {
+        val testBtn = findViewById<Button>(R.id.btn_test)
+        val text = findViewById<TextView>(R.id.tv_content)
+
+        var t = false
+
+        testBtn.setSingleClickListener {
             fullScreen()
+            text visibleOrInIf  t
+            t = !t
         }
 
 
-        runCatching{
-            findViewById<TextView>(R.id.tv_content).apply {
+
+
+
+        runCatching {
+            text.apply {
                 append("\n")
                 append(getMetaData("strValue", "1"))
                 append("\n")
@@ -52,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getName():String {
+    fun getName(): String {
         val clazz = Class.forName("android.app.ActivityThread")
         val method = clazz.getDeclaredMethod("currentPackageName", null)
         val appPackageName = method.invoke(clazz, null) as String
