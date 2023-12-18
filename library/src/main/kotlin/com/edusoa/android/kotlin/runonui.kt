@@ -41,6 +41,6 @@ fun <T> T.postUI(action: () -> Unit) {
     KitUtil.handler.post { action() }
 }
 
-object KitUtil {
+internal object KitUtil {
     val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 }

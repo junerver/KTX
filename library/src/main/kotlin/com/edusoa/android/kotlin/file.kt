@@ -24,4 +24,6 @@ class CachedMd5Delegate {
 // 扩展属性
 val File.md5: String by CachedMd5Delegate()
 
+fun File.checksum(md5: String): Boolean = this.md5 == md5
+
 infix fun File.are(that: File): Boolean = this.md5 == that.md5

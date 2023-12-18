@@ -90,3 +90,22 @@ inline fun <reified T> printType(@Suppress("UNUSED_PARAMETER") t: T) {
     val type = typeOf<T>()
     println(type)
 }
+
+data class WrapBoolean<R>(val condition: Boolean, val result: R?)
+
+inline infix fun <R> Boolean.`？`(ifTrue: R?): WrapBoolean<R> {
+    val result = if (this) {
+        ifTrue
+    } else{
+        null
+    }
+    return WrapBoolean(this, result)
+}
+
+inline infix fun <R> WrapBoolean<R>.`：`(ifFalse: R?): R? {
+   return if (!this.condition) {
+        ifFalse
+    } else {
+       this.result
+    }
+}

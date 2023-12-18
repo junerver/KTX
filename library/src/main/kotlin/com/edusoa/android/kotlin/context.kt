@@ -243,15 +243,14 @@ inline fun <reified T> Context.getMetaData(key: String, def: T): T {
  * @param assetName assets目录下对应的文件名
  * @param savePath 目标目录
  * @param saveName 目标文件名称
+ * @return asset文件的大小
  * @throws IOException
  */
 @Throws(IOException::class)
-fun Context.copyAssetFile(assetName: String, savePath: String, saveName: String) {
+fun Context.copyAssetFile(assetName: String, savePath: String, saveName: String):Long {
     val outFileName = savePath + saveName
-    //保存路径不存在则创建
     File(savePath).takeIf { !it.exists() }?.mkdir()
-    //目标文件如果存在则删除
     File(outFileName).takeIf { it.exists() }?.delete()
-    this.assets.open(assetName) writeTo FileOutputStream(outFileName)
+    return this.assets.open(assetName) writeTo FileOutputStream(outFileName)
 }
 //endregion

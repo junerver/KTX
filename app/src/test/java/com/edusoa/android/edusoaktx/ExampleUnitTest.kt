@@ -30,6 +30,8 @@ import com.edusoa.android.kotlin.toBase64
 import com.edusoa.android.kotlin.toColorX
 import com.edusoa.android.kotlin.toHex
 import com.edusoa.android.kotlin.toPartialFunction
+import com.edusoa.android.kotlin.`：`
+import com.edusoa.android.kotlin.`？`
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,12 +51,29 @@ import kotlin.time.ExperimentalTime
 class ExampleUnitTest {
 
     @Test
+    fun testTernary() {
+        val r = true `？` { "r:true" } `：` { "r:false" }
+        val r1 = false `？` "" `：` "r:false"
+    }
+
+    @Test
+    fun testAlso() {
+        fun t(): String {
+            return "tttttt".also { println("lalalala") }
+        }
+        println("=====================s")
+        println(t())
+        println("=====================e")
+    }
+
+    @Test
     fun testColor() {
         val hex = ColorX("#ff0080")
         val rgb = Triple(255, 128, 0)
         println(rgb.toColorX().toColor())
         println(rgb.toColorX())
-        assertEquals(rgb.toColorX().toColor(), Color.rgb(255,128,0))
+        assertEquals(rgb.toColorX().toColor(), Color.rgb(255, 128, 0))
+        assertEquals(hex.toRGB().toColorX(), ColorX("#FF0080"))
     }
 
     @OptIn(ExperimentalTime::class)
@@ -88,7 +107,7 @@ class ExampleUnitTest {
     @Test
     fun testBuildutil() {
         BuildUtil.initPackageName("xxx")
-        getBuildConfigValue("test","")
+        getBuildConfigValue("test", "")
 
     }
 
@@ -98,7 +117,7 @@ class ExampleUnitTest {
         ablock({
             println("====================1")
             return@ablock
-        },{
+        }, {
             println("====================2")
             return@ablock
         })

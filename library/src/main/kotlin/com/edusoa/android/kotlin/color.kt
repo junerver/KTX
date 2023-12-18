@@ -14,7 +14,10 @@ import android.graphics.Color
 @JvmInline
 value class ColorX(private val color: String) {
     init {
-        require(color.startsWith("#") && color.length == 7) { "Not a legal hexadecimal color string" }
+        require(color.startsWith("#") &&
+                color.length == 7 &&
+                toRGB().toList().all { it in 0..255 }
+        ) { "Not a legal hexadecimal color string" }
     }
 
     override fun toString(): String {

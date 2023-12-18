@@ -15,18 +15,27 @@ import java.io.OutputStream
  */
 
 /**
- * 由于一般的读写操作都是比较模板的代码，直接用这个中缀表达式更方便
+ * 由于一般的读写操作都是比较模板的代码，直接用这个中缀表达式更方便.
+ * 修改成调用官方实现[copyTo]，只是额外关闭了输入输出流，算是对官方实现的一个补充
  */
 @Throws(IOException::class)
-internal infix fun InputStream.writeTo(outputStream: OutputStream) {
-    outputStream.use { out ->
-        this.use { input ->
-            val buffer = ByteArray(1024)
-            var length: Int
-            while (input.read(buffer).also { length = it } > 0) {
-                out.write(buffer, 0, length)
-            }
-            out.flush()
-        }
+internal infix fun InputStream.writeTo(outputStream: OutputStream): Long = outputStream.use { output ->
+    this.use { input ->
+        input.copyTo(output)
+    }.also { output.flush() }
+}
+
+/**
+ * 方便的从流中读取指定长度的字节数组
+ */
+@Throws(IOException::class)
+fun InputStream.read(length: Int): ByteArray {
+    var readBytes = 0
+    val buffer = ByteArray(length)
+    while (readBytes < length) {
+        val read = this.read(buffer, readBytes, length - readBytes)
+        if (read == -1) throw IOException("inputStream read -1")
+        readBytes += read
     }
+    return buffer
 }
