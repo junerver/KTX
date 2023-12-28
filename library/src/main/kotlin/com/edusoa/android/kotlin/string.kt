@@ -161,15 +161,3 @@ fun String?.isNotNullOrEmpty(): Boolean {
     }
     return this != null && !this.trim().equals("null", true) && this.trim().isNotEmpty()
 }
-
-//字符串直接转换为Base64
-fun String.toBase64(): String = this.toByteArray().toBase64()
-
-//base64字符串 转码为BA
-@OptIn(ExperimentalEncodingApi::class)
-fun String.base64toByteArray(): ByteArray = Base64.decode(this)
-
-/**
- * base64字符串直接解码为普通字符串，与函数[toBase64]互为逆操作
- */
-fun String.decodeBase64(): String = String(this.base64toByteArray())

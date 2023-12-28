@@ -9,9 +9,10 @@ import arrow.core.recover
 import arrow.core.right
 import com.edusoa.android.kotlin.BuildUtil
 import com.edusoa.android.kotlin.ColorX
+import com.edusoa.android.kotlin.Quadruple
 import com.edusoa.android.kotlin.are
 import com.edusoa.android.kotlin.arrow.toEither
-import com.edusoa.android.kotlin.base64toByteArray
+import com.edusoa.android.kotlin.base64ToByteArray
 import com.edusoa.android.kotlin.decodeBase64
 import com.edusoa.android.kotlin.decryptRsa
 import com.edusoa.android.kotlin.encryptRsa
@@ -74,6 +75,19 @@ class ExampleUnitTest {
         println(rgb.toColorX())
         assertEquals(rgb.toColorX().toColor(), Color.rgb(255, 128, 0))
         assertEquals(hex.toRGB().toColorX(), ColorX("#FF0080"))
+
+        val aHexColor = ColorX("#80ff0080") //透明度88
+        val argb = Quadruple(100, 255, 128, 0)
+        println(argb.toColorX().toColor())
+        println(argb.toColorX())
+        println(0x64FF8000.toLong())
+        println("------------------------")
+
+        println(aHexColor.toColor())
+        println(0x80ff0080)
+        assertEquals(aHexColor.toColor(),Color.argb(128,255,0,128))
+        assertEquals(argb.toColorX().toColor(), Color.argb(100, 255, 128, 0))
+        assertEquals(aHexColor.toARGB().toColorX(), ColorX("#80FF0080"))
     }
 
     @OptIn(ExperimentalTime::class)
@@ -136,11 +150,16 @@ class ExampleUnitTest {
         // 原始数据
         val or = "lalala"
         // base64 编码
-        val b = or.toBase64()
+        val encodeStr = or.toBase64()
         // 解码后等同于原始数据
-        assertEquals(b.decodeBase64(), or)
+        assertEquals(encodeStr.decodeBase64(), or)
         //base64 还原成自己数组，等同于原始数据的字节数组
-        assertEquals(b.base64toByteArray().toHex(), or.toByteArray().toHex())
+        assertEquals(encodeStr.base64ToByteArray().toHex(), or.toByteArray().toHex())
+        //原始字符串base64编码后的ba
+        val base64Ba = encodeStr.toByteArray()
+        //解码后获得字节数组，然后还原成原始字符串
+        val decode = base64Ba.decodeBase64().decodeToString()
+        assertEquals(decode, or)
     }
 
 

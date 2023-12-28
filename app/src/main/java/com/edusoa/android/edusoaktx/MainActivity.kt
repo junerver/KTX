@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.edusoa.android.kotlin.SingletonHolder
@@ -14,6 +15,8 @@ import com.edusoa.android.kotlin.gone
 import com.edusoa.android.kotlin.goneIf
 import com.edusoa.android.kotlin.runIf
 import com.edusoa.android.kotlin.setSingleClickListener
+import com.edusoa.android.kotlin.toColor
+import com.edusoa.android.kotlin.trimString
 import com.edusoa.android.kotlin.visibleOrInIf
 
 
@@ -29,7 +32,10 @@ class MainActivity : AppCompatActivity() {
         }
         val testBtn = findViewById<Button>(R.id.btn_test)
         val text = findViewById<TextView>(R.id.tv_content)
+        val etText = findViewById<EditText>(R.id.et_edit)
+        text.setTextColor("#078910".toColor())
 
+        etText.trimString()
         var t = false
 
         testBtn.setSingleClickListener {

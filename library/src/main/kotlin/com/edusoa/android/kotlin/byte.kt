@@ -23,12 +23,6 @@ fun bytebuffer2ByteArray(buffer: ByteBuffer): ByteArray =
 //bf转ba
 fun ByteBuffer.toByteArray(): ByteArray = bytebuffer2ByteArray(this)
 
-//ba转base64
-@OptIn(ExperimentalEncodingApi::class)
-fun ByteArray.toBase64(): String = Base64.encode(this)
-
-@OptIn(ExperimentalEncodingApi::class)
-fun ByteArray.decodeBase64(): ByteArray = Base64.decode(this)
 
 //gzip压缩
 fun compressByGzip(data: ByteArray): ByteArray = ByteArrayOutputStream().apply {

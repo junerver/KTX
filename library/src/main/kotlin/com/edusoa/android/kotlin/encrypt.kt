@@ -37,14 +37,14 @@ object EncryptUtils {
         get() {
             require(publicKey.isNotNullOrEmpty()) { "must init public key with base64 key" }
             return KeyFactory.getInstance("RSA")
-                .generatePublic(X509EncodedKeySpec(publicKey!!.base64toByteArray()))
+                .generatePublic(X509EncodedKeySpec(publicKey!!.base64ToByteArray()))
         }
 
     internal val _privateKey: PrivateKey
         get() {
             require(privateKey.isNotNullOrEmpty()) { "must init private key with base64 key" }
             return KeyFactory.getInstance("RSA")
-                .generatePrivate(PKCS8EncodedKeySpec(privateKey!!.base64toByteArray()))
+                .generatePrivate(PKCS8EncodedKeySpec(privateKey!!.base64ToByteArray()))
         }
 }
 
@@ -61,7 +61,7 @@ fun String.decryptRsa(): String? {
     val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
         .apply { init(Cipher.DECRYPT_MODE, EncryptUtils._privateKey) }
     return runCatching {
-        ByteArrayInputStream(this.base64toByteArray()).use { bis ->
+        ByteArrayInputStream(this.base64ToByteArray()).use { bis ->
             ByteArrayOutputStream().use { bos ->
                 val buf = ByteArray(128)
                 var bufl: Int

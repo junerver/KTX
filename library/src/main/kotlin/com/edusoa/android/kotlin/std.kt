@@ -4,6 +4,7 @@
 
 package com.edusoa.android.kotlin
 
+import java.io.Serializable
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -109,3 +110,14 @@ inline infix fun <R> WrapBoolean<R>.`：`(ifFalse: R?): R? {
        this.result
     }
 }
+
+data class Quadruple<out A, out B, out C, out D>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D
+) : Serializable {
+    public override fun toString(): String = "($first, $second, $third, $fourth)"
+}
+
+public fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
