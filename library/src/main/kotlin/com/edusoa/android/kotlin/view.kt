@@ -4,6 +4,8 @@ package com.edusoa.android.kotlin
 
 
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.getSystemService
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -86,5 +88,13 @@ infix fun View.visibleOrInIf(condition: Boolean) =
     if (condition) this.visible() else this.invisible()
 
 infix fun View.visibleOrGoneIf(condition: Boolean) = if (condition) this.visible() else this.gone()
+
+/**
+ * 强制打开输入软键盘
+ */
+fun View.showKeyboardForced() {
+    val imm:InputMethodManager? = this.context.getSystemService()
+    imm?.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+}
 
 //endregion
