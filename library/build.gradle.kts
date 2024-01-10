@@ -27,7 +27,7 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-                groupId = "com.edusoa.android.kotlin"
+                groupId = "xyz.junerver.kotlin"
                 artifactId = "ktx"
                 version = "0.0.7"
             }

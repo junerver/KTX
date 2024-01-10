@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.edusoa.android.edusoaktx"
+    namespace = "xyz.junerver.android.edusoaktx"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.edusoa.android.edusoaktxTEST"
+        applicationId = "xyz.junerver.android.edusoaktxTEST"
         minSdk = 21
         targetSdk = 33
         versionCode = 1

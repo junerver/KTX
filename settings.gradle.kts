@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "EdusoaKTX"
+rootProject.name = "KTX"
 include(":app")
 include(":library")
