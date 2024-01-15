@@ -24,20 +24,20 @@ package xyz.junerver.kotlin
  */
 class PartialFunction<in P1, out R>(
     /*用于判断入参[p1]是否会被偏函数的函数体执行*/
-    private val definetAt: (P1) -> Boolean,
+    private val definedAt: (P1) -> Boolean,
     /*满足条件时，真实执行的函数体[f]*/
     private val f: (P1) -> R
 ) : (P1) -> R {
     /*偏函数实际是一个类，通过从写 [invoke] 函数，伪装成方法*/
     override fun invoke(p1: P1): R {
-        if (definetAt(p1)) {
+        if (definedAt(p1)) {
             return f(p1)
         } else {
             throw IllegalArgumentException("Value: ($p1) isn't supported by this function")
         }
     }
     /*偏函数本身对外暴露，判断函数*/
-    fun isDefinedAt(p1: P1) = definetAt(p1)
+    fun isDefinedAt(p1: P1) = definedAt(p1)
 }
 
 /**
