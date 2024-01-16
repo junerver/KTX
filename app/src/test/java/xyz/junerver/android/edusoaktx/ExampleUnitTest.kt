@@ -7,6 +7,10 @@ import arrow.core.left
 import arrow.core.memoize
 import arrow.core.recover
 import arrow.core.right
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import xyz.junerver.kotlin.BuildUtil
 import xyz.junerver.kotlin.ColorX
 import xyz.junerver.kotlin.Quadruple
@@ -21,8 +25,8 @@ import xyz.junerver.kotlin.lazy.ManagedResettableLazy
 import xyz.junerver.kotlin.lazy.managedLazy
 import xyz.junerver.kotlin.lazy.resettableManager
 import xyz.junerver.kotlin.md5
-import xyz.junerver.kotlin.orElse
 import xyz.junerver.kotlin.padLeft
+import xyz.junerver.kotlin.plus
 import xyz.junerver.kotlin.printType
 import xyz.junerver.kotlin.runIf
 import xyz.junerver.kotlin.runUnless
@@ -33,10 +37,6 @@ import xyz.junerver.kotlin.toHex
 import xyz.junerver.kotlin.toPartialFunction
 import xyz.junerver.kotlin.`：`
 import xyz.junerver.kotlin.`？`
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import java.io.File
 import kotlin.random.Random
 import kotlin.system.measureNanoTime
@@ -370,7 +370,7 @@ class ExampleUnitTest {
         }.toPartialFunction { it.code == 99 }
 
         val applyChain =
-            listOf(p1, p2, p23).reduce { acc, partialFunction -> acc orElse partialFunction }
+            listOf(p1, p2, p23).reduce { acc, partialFunction -> acc + partialFunction }
         p1(Event(10, "code 10"))
         applyChain(Event(100, "code 100"))
         applyChain(Event(99, "code 99"))

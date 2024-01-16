@@ -55,7 +55,7 @@ fun <P1, R> PartialFunction<P1, R>.invokeOrElse(p1: P1, default: R): R {
 /**
  * 用于连接多个偏函数，形成函数链条
  */
-infix fun <P1, R> PartialFunction<P1, R>.orElse(that: PartialFunction<P1, R>): PartialFunction<P1, R> {
+operator fun <P1, R> PartialFunction<P1, R>.plus(that: PartialFunction<P1, R>): PartialFunction<P1, R> {
     return PartialFunction({ this.isDefinedAt(it) || that.isDefinedAt(it) }) {
         when {
             this.isDefinedAt(it) -> this(it)
