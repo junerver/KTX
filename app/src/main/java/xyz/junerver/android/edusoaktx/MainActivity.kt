@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import xyz.junerver.android.edusoaktx.R
 import xyz.junerver.kotlin.fullScreen
 import xyz.junerver.kotlin.SingletonHolder
+import xyz.junerver.kotlin.debounce
+import xyz.junerver.kotlin.debounce2
 import xyz.junerver.kotlin.getMetaData
 import xyz.junerver.kotlin.runIf
 import xyz.junerver.kotlin.setSingleClickListener
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             TestSingleton.getInstance(this@MainActivity).print()
         }
         val testBtn = findViewById<Button>(R.id.btn_test)
+        val debounceBtn = findViewById<Button>(R.id.btn_debounce)
         val text = findViewById<TextView>(R.id.tv_content)
         val etText = findViewById<EditText>(R.id.et_edit)
         text.setTextColor("#078910".toColor())
@@ -41,6 +44,17 @@ class MainActivity : AppCompatActivity() {
             fullScreen()
             text visibleOrInIf  t
             t = !t
+        }
+        val action = {
+            Log.d(TAG, "onCreate: 我执行了")
+            throw RuntimeException("test")
+            Unit
+        }
+        val debounced = action.debounce(1000)
+        val debounced2 = action.debounce2(1000)
+        debounceBtn.setOnClickListener {
+            Log.d(TAG, "onCreate: 按钮点击了")
+            debounced2()
         }
 
 
