@@ -16,6 +16,7 @@ import xyz.junerver.kotlin.debounce2
 import xyz.junerver.kotlin.getMetaData
 import xyz.junerver.kotlin.runIf
 import xyz.junerver.kotlin.setSingleClickListener
+import xyz.junerver.kotlin.throttle
 import xyz.junerver.kotlin.toColor
 import xyz.junerver.kotlin.trimString
 import xyz.junerver.kotlin.visibleOrInIf
@@ -47,14 +48,14 @@ class MainActivity : AppCompatActivity() {
         }
         val action = {
             Log.d(TAG, "onCreate: 我执行了")
-            throw RuntimeException("test")
             Unit
         }
         val debounced = action.debounce(1000)
         val debounced2 = action.debounce2(1000)
+        val to = action.throttle(1000)
         debounceBtn.setOnClickListener {
             Log.d(TAG, "onCreate: 按钮点击了")
-            debounced2()
+            to()
         }
 
 
