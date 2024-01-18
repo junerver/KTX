@@ -58,6 +58,9 @@ public inline fun <T, R> T.runUnless(condition: Boolean = true, noinline block: 
  * 在一些需要函数返回值的场景可以用来替代显式书写的[Unit]。
  */
 public inline fun <T> T.then(block: (T) -> Unit) {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
     block(this)
     return
 }
@@ -90,7 +93,7 @@ public inline fun <T> Boolean.switches(
         callsInPlace(ifTrue, InvocationKind.AT_MOST_ONCE)
         callsInPlace(ifFalse, InvocationKind.AT_MOST_ONCE)
     }
-    return if (this) ifTrue(this) else ifFalse(this)
+    return if (this) ifTrue(true) else ifFalse(false)
 }
 
 /**
@@ -101,22 +104,29 @@ inline fun <reified T> printType(@Suppress("UNUSED_PARAMETER") t: T) {
     println(type)
 }
 
+/**
+ * 一个kotlin实现的类似三元表达式，甚至由于语言的特性，可以用来返回函数：
+ * ```kotlin
+ * val r = true `？` { "r:true" } `：` { "r:false" }
+ * val r1 = false `？` "" `：` "r:false"
+ * ```
+ */
 data class WrapBoolean<R>(val condition: Boolean, val result: R?)
 
 inline infix fun <R> Boolean.`？`(ifTrue: R?): WrapBoolean<R> {
     val result = if (this) {
         ifTrue
-    } else{
+    } else {
         null
     }
     return WrapBoolean(this, result)
 }
 
 inline infix fun <R> WrapBoolean<R>.`：`(ifFalse: R?): R? {
-   return if (!this.condition) {
+    return if (!this.condition) {
         ifFalse
     } else {
-       this.result
+        this.result
     }
 }
 
