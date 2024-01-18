@@ -37,6 +37,9 @@ android {
         unitTests {
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {

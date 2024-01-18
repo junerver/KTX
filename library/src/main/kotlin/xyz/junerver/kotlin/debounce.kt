@@ -57,9 +57,9 @@ internal class DebounceWithLifecycle(
 }
 
 fun (() -> Unit).debounce(
+    lifecycleOwner: LifecycleOwner? = null,
     delay: Long = 500,
-    onFailure: (Throwable) -> Unit = errorLog,
-    lifecycleOwner: LifecycleOwner? = null
+    onFailure: (Throwable) -> Unit = errorLog
 ): () -> Unit {
     return DebounceWithLifecycle(this, delay, onFailure, lifecycleOwner)
 }
