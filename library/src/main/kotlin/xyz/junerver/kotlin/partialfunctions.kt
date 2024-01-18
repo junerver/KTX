@@ -41,7 +41,7 @@ class PartialFunction<in P1, out R>(
 }
 
 /**
- * 给当前的偏函数一个入参[p1]，当 [p1] 满足函数 [isDefinedAt]，执行偏函数的函数体
+ * 给当前的偏函数一个入参[p1]，当 [p1] 满足函数 [PartialFunction.isDefinedAt]，执行偏函数的函数体
  * 不满足时使用 [default] 作为返回值
  */
 fun <P1, R> PartialFunction<P1, R>.invokeOrElse(p1: P1, default: R): R {

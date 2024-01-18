@@ -12,7 +12,7 @@ package xyz.junerver.kotlin
  * Email: junerver@gmail.com
  * Version: v1.0
  */
-class Throttle(
+internal class Throttle(
     private val action: () -> Unit,
     private val delay: Long,
     private val onFailure: (Throwable) -> Unit
@@ -28,6 +28,6 @@ class Throttle(
     }
 }
 
-fun (() -> Unit).throttle(delay: Long = 500, onFailure: (Throwable) -> Unit = errorLog): Throttle {
+fun (() -> Unit).throttle(delay: Long = 500, onFailure: (Throwable) -> Unit = errorLog): () -> Unit {
     return Throttle(this, delay, onFailure)
 }

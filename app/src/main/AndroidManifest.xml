@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="xyz.junerver.android.edusoaktx"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="xyz.junerver.android.edusoaktx">
 
     <application
         android:allowBackup="true"
@@ -13,21 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KTX"
         tools:targetApi="31">
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="strValue"
             android:value="MainActivity" />
         <meta-data
             android:name="intValue"
-            android:value="9"/>
+            android:value="9" />
         <meta-data
             android:name="floatValue"
-            android:value="9.99F"/>
+            android:value="9.99F" />
         <meta-data
             android:name="longValue"
-            android:value="1234567890L"/>
+            android:value="1234567890L" />
+
         <activity
-            android:name="xyz.junerver.android.edusoaktx.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

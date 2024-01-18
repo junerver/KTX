@@ -10,6 +10,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.typeOf
 
+const val TAG = "Junerver - KTX"
 
 /**
  * 全局的空判断扩展属性，这样做空判断时更为优雅
