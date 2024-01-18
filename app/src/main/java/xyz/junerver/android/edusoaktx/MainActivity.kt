@@ -25,7 +25,8 @@ private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    private var _binding: ActivityMainBinding by Delegates.notNull()
+    private lateinit var _binding: ActivityMainBinding //by Delegates.notNull()
+    private val binding = _binding
     private var context: Context by Delegates.notNull()
 
     @SuppressLint("MissingInflatedId")
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         runIf {
             TestSingleton.getInstance(this@MainActivity).print()
         }
-        with(_binding) {
+        with(binding) {
             var t = false
             btnTest.setSingleClickListener {
                 fullScreen()
