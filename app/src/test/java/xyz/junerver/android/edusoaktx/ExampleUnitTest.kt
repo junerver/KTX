@@ -52,6 +52,18 @@ import kotlin.time.ExperimentalTime
 class ExampleUnitTest {
 
     @Test
+    fun testEvilCode() {
+        val origin = 11
+        var result: Int = -1
+        result = origin shl 1 // *=2
+        assertEquals(result, origin * 2)
+        result = origin shr 1 // /=2
+        assertEquals(result, origin / 2)
+        result = (origin shl 1) + (origin shl 3) // *=10
+        assertEquals(result, origin * 10)
+    }
+
+    @Test
     fun testTernary() {
         val r = true `？` { "r:true" } `：` { "r:false" }
         val r1 = false `？` "" `：` "r:false"
@@ -85,7 +97,7 @@ class ExampleUnitTest {
 
         println(aHexColor.toColor())
         println(0x80ff0080)
-        assertEquals(aHexColor.toColor(),Color.argb(128,255,0,128))
+        assertEquals(aHexColor.toColor(), Color.argb(128, 255, 0, 128))
         assertEquals(argb.toColorX().toColor(), Color.argb(100, 255, 128, 0))
         assertEquals(aHexColor.toARGB().toColorX(), ColorX("#80FF0080"))
     }

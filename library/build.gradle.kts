@@ -20,6 +20,9 @@ dependencies {
     api("io.arrow-kt:arrow-core:1.2.0-RC")
     api("androidx.core:core-ktx:1.10.1")
     implementation(kotlin("reflect"))
+    //kotlin 协程
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
 
 afterEvaluate {

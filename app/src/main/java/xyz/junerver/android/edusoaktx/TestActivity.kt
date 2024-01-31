@@ -18,7 +18,13 @@ class TestActivity : AppCompatActivity() {
             Log.d(TAG, "onCreate: 我执行了")
             Unit
         }
-        val debounced = action.debounce(this,10_000)
+
+        fun fn() {
+            Log.d(TAG, "onCreate: 我执行了fun")
+        }
+
+        val debounced = action.debounce(this, 10_000)
+        val debounced2 = ::fn.debounce(this, 10_000)
         findViewById<Button>(R.id.btn_debounce3).setOnClickListener {
             debounced()
         }
