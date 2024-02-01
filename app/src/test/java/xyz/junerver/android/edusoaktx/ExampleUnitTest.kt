@@ -31,6 +31,7 @@ import xyz.junerver.kotlin.printType
 import xyz.junerver.kotlin.runIf
 import xyz.junerver.kotlin.runUnless
 import xyz.junerver.kotlin.switches
+import xyz.junerver.kotlin.to
 import xyz.junerver.kotlin.toBase64
 import xyz.junerver.kotlin.toColorX
 import xyz.junerver.kotlin.toHex
@@ -50,6 +51,16 @@ import kotlin.time.ExperimentalTime
  */
 @RunWith(RobolectricTestRunner::class)
 class ExampleUnitTest {
+
+    @Test
+    fun testTuples() {
+        val p = "p" to 2
+        val t = "t" to 3 to 5
+        val d= "d" to 3 to 5 to 9
+        println(p)
+        println(t)
+        println(d)
+    }
 
     @Test
     fun testEvilCode() {

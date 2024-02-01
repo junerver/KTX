@@ -145,3 +145,10 @@ data class Quadruple<out A, out B, out C, out D>(
 }
 
 public fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
+
+/**
+ * 元组扩展，可以使用 `a to b to c` 这样的连续中缀函数创建更多元素的元组
+ */
+infix fun <A, B, C> Pair<A, B>.to(c: C): Triple<A, B, C> = Triple(this.first, this.second, c)
+infix fun <A, B, C, D> Triple<A, B, C>.to(d: D): Quadruple<A, B, C, D> =
+    Quadruple(this.first, this.second, this.third, d)
