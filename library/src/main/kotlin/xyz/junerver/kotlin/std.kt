@@ -67,37 +67,6 @@ public inline fun <T> T.then(block: (T) -> Unit) {
 }
 
 /**
- * 一个简单的if-else能返回结果的实现，类似于Either的左右值，它可以更好的将代码变成链式函数调用，
- * 也完全可以配合 arrow-kt，将结果封装成Either
- *```kotlin
- * //before
- * @JvmStatic
- * fun isFileExists(file: File?): Boolean {
- *     if (file == null) return false
- *     return if (file.exists()) true else isFileExists(file.absolutePath)
- * }
- * //after
- * fun isFileExists(file: File?): Boolean {
- *     return file?.exists()?.switches(
- *         ifTrue = { it },
- *         ifFalse = { isFileExists(file.absolutePath) }
- *     ) ?: false
- * }
- * ```
- */
-@OptIn(ExperimentalContracts::class)
-public inline fun <T> Boolean.switches(
-    noinline ifTrue: (Boolean) -> T,
-    noinline ifFalse: (Boolean) -> T
-): T {
-    contract {
-        callsInPlace(ifTrue, InvocationKind.AT_MOST_ONCE)
-        callsInPlace(ifFalse, InvocationKind.AT_MOST_ONCE)
-    }
-    return if (this) ifTrue(true) else ifFalse(false)
-}
-
-/**
  * 打印泛型
  */
 inline fun <reified T> printType(@Suppress("UNUSED_PARAMETER") t: T) {
@@ -152,3 +121,4 @@ public fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, t
 infix fun <A, B, C> Pair<A, B>.to(c: C): Triple<A, B, C> = Triple(this.first, this.second, c)
 infix fun <A, B, C, D> Triple<A, B, C>.to(d: D): Quadruple<A, B, C, D> =
     Quadruple(this.first, this.second, this.third, d)
+

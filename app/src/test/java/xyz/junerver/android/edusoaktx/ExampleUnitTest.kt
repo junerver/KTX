@@ -11,11 +11,13 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import xyz.junerver.kotlin.toBoolean
 import xyz.junerver.kotlin.BuildUtil
 import xyz.junerver.kotlin.ColorX
 import xyz.junerver.kotlin.Quadruple
 import xyz.junerver.kotlin.are
 import xyz.junerver.kotlin.arrow.toEither
+import xyz.junerver.kotlin.asBoolean
 import xyz.junerver.kotlin.base64ToByteArray
 import xyz.junerver.kotlin.decodeBase64
 import xyz.junerver.kotlin.decryptRsa
@@ -53,10 +55,20 @@ import kotlin.time.ExperimentalTime
 class ExampleUnitTest {
 
     @Test
+    fun testBoolean() {
+        var a: Boolean? = false
+        println(a.asBoolean)
+        a = null
+        println(a.asBoolean)
+        val al = listOf<Any?>("false", -1, null, "")
+        al.map(::toBoolean).forEach(::println)
+    }
+
+    @Test
     fun testTuples() {
         val p = "p" to 2
         val t = "t" to 3 to 5
-        val d= "d" to 3 to 5 to 9
+        val d = "d" to 3 to 5 to 9
         println(p)
         println(t)
         println(d)
