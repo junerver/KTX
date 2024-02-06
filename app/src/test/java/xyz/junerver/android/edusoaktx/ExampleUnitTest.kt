@@ -18,6 +18,7 @@ import xyz.junerver.kotlin.Quadruple
 import xyz.junerver.kotlin.are
 import xyz.junerver.kotlin.arrow.toEither
 import xyz.junerver.kotlin.asBoolean
+import xyz.junerver.kotlin.asNot
 import xyz.junerver.kotlin.base64ToByteArray
 import xyz.junerver.kotlin.decodeBase64
 import xyz.junerver.kotlin.decryptRsa
@@ -27,6 +28,7 @@ import xyz.junerver.kotlin.lazy.ManagedResettableLazy
 import xyz.junerver.kotlin.lazy.managedLazy
 import xyz.junerver.kotlin.lazy.resettableManager
 import xyz.junerver.kotlin.md5
+import xyz.junerver.kotlin.not
 import xyz.junerver.kotlin.padLeft
 import xyz.junerver.kotlin.plus
 import xyz.junerver.kotlin.printType
@@ -62,6 +64,8 @@ class ExampleUnitTest {
         println(a.asBoolean)
         val al = listOf<Any?>("false", -1, null, "")
         al.map(::toBoolean).forEach(::println)
+        if (a.asNot()) {
+        }
     }
 
     @Test

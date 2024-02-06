@@ -65,7 +65,10 @@ public inline fun <T> Boolean.switches(
  */
 fun Boolean?.asIs(default: Boolean = true): Boolean = this ?: default
 
+@Deprecated("Boolean has fun name 'not', so change fun name", ReplaceWith("this.asNot(default)"))
+fun Boolean?.not(default: Boolean = false): Boolean = this.asNot(default)
+
 /**
  * 可空布尔量字面值取反，如果为空则取默认值
  */
-fun Boolean?.not(default: Boolean = false): Boolean = this?.run { !this } ?: default
+fun Boolean?.asNot(default: Boolean = false): Boolean = this?.run { !this } ?: default
