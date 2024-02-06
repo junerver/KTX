@@ -9,11 +9,11 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.25.2" apply false
 }
 
-allprojects {
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
-            languageVersion = "2.0"
-        }
-    }
-}
+//allprojects {
+//    tasks.withType<KotlinCompile> {
+//        kotlinOptions {
+//            jvmTarget = JavaVersion.VERSION_1_8.toString()
+//            languageVersion = "2.0"
+//        }
+//    }
+//}

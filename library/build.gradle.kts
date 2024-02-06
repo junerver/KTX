@@ -25,27 +25,3 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                from(components["release"])
-                groupId = "xyz.junerver.kotlin"
-                artifactId = "ktx"
-                version = "0.0.7"
-            }
-        }
-        repositories {
-            maven {
-                isAllowInsecureProtocol = true
-                name = "nexus"
-                url = uri("http://10.10.15.120:8081/repository/maven-releases/")
-                credentials {
-                    username = "admin"
-                    password = "admin"
-                }
-            }
-        }
-    }
-}
