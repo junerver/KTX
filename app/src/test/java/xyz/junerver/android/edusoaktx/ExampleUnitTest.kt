@@ -24,6 +24,7 @@ import xyz.junerver.kotlin.decodeBase64
 import xyz.junerver.kotlin.decryptRsa
 import xyz.junerver.kotlin.encryptRsa
 import xyz.junerver.kotlin.getBuildConfigValue
+import xyz.junerver.kotlin.ifTrue
 import xyz.junerver.kotlin.lazy.ManagedResettableLazy
 import xyz.junerver.kotlin.lazy.managedLazy
 import xyz.junerver.kotlin.lazy.resettableManager
@@ -65,14 +66,16 @@ class ExampleUnitTest {
         val al = listOf<Any?>("false", -1, null, "")
         al.map(::toBoolean).forEach(::println)
         if (toBoolean(a)) {
-            println( a.hashCode())
+            println(a.hashCode())
         }
         val x: (() -> Unit)? = null
         if (x.asBoolean()) {
             x()
         }
+        val xy = x.ifTrue()
         val srr = emptyArray<String>()
-        println("数组检测：${srr.asBoolean()}")
+        println("数组检测：${srr.asBoolean()}  赋值：${srr.ifTrue()}")
+        println(xy)
     }
 
     @Test
@@ -83,6 +86,8 @@ class ExampleUnitTest {
         println(p)
         println(t)
         println(d)
+        val (a, b, c) = with(d) { Quadruple(first, second, third, fourth) }
+        println("$a,$b,$c")
     }
 
     @Test

@@ -43,6 +43,21 @@ public inline fun <T, R> T.runIf(condition: Boolean = true, noinline block: T.()
 }
 
 /**
+ * 一个过滤判断赋值，可以用来过滤空数组、0 Duration、0、false字符串等等，将这些对象直接视为 null
+ * ```
+ * var some:String? = null
+ * val other:String? = "xxx"
+ * if (other.isNotEmpty()){
+ *   some = other
+ * }
+ *
+ * var some = other.ifTrue()
+ * ```
+ */
+fun Any?.ifTrue() = runIf(this.asBoolean()) { this }
+
+
+/**
  * 与上面的效果相反，条件达成则不执行，条件为否定时执行闭包
  */
 @OptIn(ExperimentalContracts::class)
@@ -99,26 +114,3 @@ inline infix fun <R> WrapBoolean<R>.`：`(ifFalse: R?): R? {
         this.result
     }
 }
-
-
-/**
- * 四个数据的元组类型
- */
-data class Quadruple<out A, out B, out C, out D>(
-    val first: A,
-    val second: B,
-    val third: C,
-    val fourth: D
-) : Serializable {
-    public override fun toString(): String = "($first, $second, $third, $fourth)"
-}
-
-public fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
-
-/**
- * 元组扩展，可以使用 `a to b to c` 这样的连续中缀函数创建更多元素的元组
- */
-infix fun <A, B, C> Pair<A, B>.to(c: C): Triple<A, B, C> = Triple(this.first, this.second, c)
-infix fun <A, B, C, D> Triple<A, B, C>.to(d: D): Quadruple<A, B, C, D> =
-    Quadruple(this.first, this.second, this.third, d)
-
