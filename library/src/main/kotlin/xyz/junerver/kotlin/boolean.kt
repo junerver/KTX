@@ -17,16 +17,28 @@ import kotlin.contracts.contract
  */
 fun toBoolean(value: Any?): Boolean {
     return when (value) {
-        null -> false
-        is Boolean -> value
-        is Number -> value != 0
-        is String -> value.isNotEmpty() && value != "false"
+        null -> false //空对象直接返回 false
+        is Boolean -> value //布尔类型返回自身
+        is Number -> value != 0 //数值类型非0
+        is String -> value.isNotEmpty() && value != "false" && value != "null" //空字符、'false'、'null'
+        is Array<*> -> value.size > 0 //数组、集合必须有元素
+        is Collection<*> -> value.isNotEmpty()
         else -> true
     }
 }
 
+@Deprecated("add contract,use fun this.asBoolean()", ReplaceWith("this.asBoolean()"))
 val Any?.asBoolean: Boolean
-    get() = toBoolean(this)
+    get() = this.asBoolean()
+
+
+@OptIn(ExperimentalContracts::class)
+fun Any?.asBoolean(): Boolean {
+    contract {
+        returns(true) implies (this@asBoolean != null)
+    }
+    return toBoolean(this)
+}
 
 
 /**

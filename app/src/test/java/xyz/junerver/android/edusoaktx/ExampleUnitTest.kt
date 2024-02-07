@@ -59,13 +59,20 @@ class ExampleUnitTest {
     @Test
     fun testBoolean() {
         var a: Boolean? = false
-        println(a.asBoolean)
+        println(a.asBoolean())
         a = null
-        println(a.asBoolean)
+        println(a.asBoolean())
         val al = listOf<Any?>("false", -1, null, "")
         al.map(::toBoolean).forEach(::println)
-        if (a.asNot()) {
+        if (toBoolean(a)) {
+            println( a.hashCode())
         }
+        val x: (() -> Unit)? = null
+        if (x.asBoolean()) {
+            x()
+        }
+        val srr = emptyArray<String>()
+        println("数组检测：${srr.asBoolean()}")
     }
 
     @Test
