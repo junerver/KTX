@@ -14,11 +14,10 @@ import org.robolectric.RobolectricTestRunner
 import xyz.junerver.kotlin.toBoolean
 import xyz.junerver.kotlin.BuildUtil
 import xyz.junerver.kotlin.ColorX
-import xyz.junerver.kotlin.Quadruple
+import xyz.junerver.kotlin.Tuple4
 import xyz.junerver.kotlin.are
 import xyz.junerver.kotlin.arrow.toEither
 import xyz.junerver.kotlin.asBoolean
-import xyz.junerver.kotlin.asNot
 import xyz.junerver.kotlin.base64ToByteArray
 import xyz.junerver.kotlin.decodeBase64
 import xyz.junerver.kotlin.decryptRsa
@@ -29,7 +28,6 @@ import xyz.junerver.kotlin.lazy.ManagedResettableLazy
 import xyz.junerver.kotlin.lazy.managedLazy
 import xyz.junerver.kotlin.lazy.resettableManager
 import xyz.junerver.kotlin.md5
-import xyz.junerver.kotlin.not
 import xyz.junerver.kotlin.padLeft
 import xyz.junerver.kotlin.plus
 import xyz.junerver.kotlin.printType
@@ -86,7 +84,7 @@ class ExampleUnitTest {
         println(p)
         println(t)
         println(d)
-        val (a, b, c) = with(d) { Quadruple(first, second, third, fourth) }
+        val (a, b, c) = with(d) { Tuple4(first, second, third, fourth) }
         println("$a,$b,$c")
     }
 
@@ -128,7 +126,7 @@ class ExampleUnitTest {
         assertEquals(hex.toRGB().toColorX(), ColorX("#FF0080"))
 
         val aHexColor = ColorX("#80ff0080") //透明度88
-        val argb = Quadruple(100, 255, 128, 0)
+        val argb = Tuple4(100, 255, 128, 0)
         println(argb.toColorX().toColor())
         println(argb.toColorX())
         println(0x64FF8000.toLong())

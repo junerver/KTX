@@ -37,13 +37,13 @@ value class ColorX(private val _color: String) {
     fun isArgb(): Boolean = _color.length == 9
     fun isRgb(): Boolean = _color.length == 7
 
-    fun toARGB(): Quadruple<Int, Int, Int, Int> {
+    fun toARGB(): Tuple4<Int, Int, Int, Int> {
         val color = _color.substring(1).toLong(16)
         val alpha = if (isRgb()) 255 else (color and 0xff000000 shr 24).toInt()
         val red = (color and 0x00ff0000 shr 16).toInt()
         val green = (color and 0x0000ff00 shr 8).toInt()
         val blue = (color and 0x000000ff).toInt()
-        return Quadruple(alpha, red, green, blue)
+        return Tuple4(alpha, red, green, blue)
     }
 
     fun toRGB(): Triple<Int, Int, Int> {
@@ -60,7 +60,7 @@ value class ColorX(private val _color: String) {
     }
 }
 
-fun Quadruple<Int, Int, Int, Int>.toColorX(): ColorX {
+fun Tuple4<Int, Int, Int, Int>.toColorX(): ColorX {
     require(this.toList().all { it in 0..255 }) { "Not a legal ARGB color Quadruple" }
     return ColorX("#${this.toList().joinToString("") { String.format("%02X", it); }}")
 }

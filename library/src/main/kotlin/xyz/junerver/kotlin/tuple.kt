@@ -1,3 +1,5 @@
+@file: JvmName("-tuple")
+
 package xyz.junerver.kotlin
 
 import java.io.Serializable
@@ -9,6 +11,15 @@ import java.io.Serializable
  * Email: junerver@gmail.com
  * Version: v1.0
  */
+typealias Tuple2<A, B> = Pair<A, B>
+typealias Tuple3<A, B, C> = Triple<A, B, C>
+typealias Tuple4<A, B, C, D> = Quadruple<A, B, C, D>
+typealias Tuple5<A, B, C, D, E> = Quintuple<A, B, C, D, E>
+typealias Tuple6<A, B, C, D, E, F> = Sextuple<A, B, C, D, E, F>
+typealias Tuple7<A, B, C, D, E, F, G> = Septuple<A, B, C, D, E, F, G>
+typealias Tuple8<A, B, C, D, E, F, G, H> = Octuple<A, B, C, D, E, F, G, H>
+typealias Tuple9<A, B, C, D, E, F, G, H, I> = Nonuple<A, B, C, D, E, F, G, H, I>
+typealias Tuple10<A, B, C, D, E, F, G, H, I, J> = Decuple<A, B, C, D, E, F, G, H, I, J>
 
 /**
  * 四个数据的元组类型
@@ -37,7 +48,8 @@ data class Quintuple<out A, out B, out C, out D, out E>(
     public override fun toString(): String = "($first, $second, $third, $fourth, $fifth)"
 }
 
-public fun <T> Quintuple<T, T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth, fifth)
+public fun <T> Quintuple<T, T, T, T, T>.toList(): List<T> =
+    listOf(first, second, third, fourth, fifth)
 
 /**
  * 六个数据的元组类型
@@ -53,7 +65,8 @@ data class Sextuple<out A, out B, out C, out D, out E, out F>(
     public override fun toString(): String = "($first, $second, $third, $fourth, $fifth, $sixth)"
 }
 
-public fun <T> Sextuple<T, T, T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth, fifth, sixth)
+public fun <T> Sextuple<T, T, T, T, T, T>.toList(): List<T> =
+    listOf(first, second, third, fourth, fifth, sixth)
 
 /**
  * 七个数据的元组类型
@@ -67,7 +80,8 @@ data class Septuple<out A, out B, out C, out D, out E, out F, out G>(
     val sixth: F,
     val seventh: G
 ) : Serializable {
-    public override fun toString(): String = "($first, $second, $third, $fourth, $fifth, $sixth, $seventh)"
+    public override fun toString(): String =
+        "($first, $second, $third, $fourth, $fifth, $sixth, $seventh)"
 }
 
 public fun <T> Septuple<T, T, T, T, T, T, T>.toList(): List<T> =
@@ -86,7 +100,8 @@ data class Octuple<out A, out B, out C, out D, out E, out F, out G, out H>(
     val seventh: G,
     val eighth: H
 ) : Serializable {
-    public override fun toString(): String = "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth)"
+    public override fun toString(): String =
+        "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth)"
 }
 
 public fun <T> Octuple<T, T, T, T, T, T, T, T>.toList(): List<T> =
@@ -106,7 +121,8 @@ data class Nonuple<out A, out B, out C, out D, out E, out F, out G, out H, out I
     val eighth: H,
     val ninth: I
 ) : Serializable {
-    public override fun toString(): String = "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth)"
+    public override fun toString(): String =
+        "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth)"
 }
 
 public fun <T> Nonuple<T, T, T, T, T, T, T, T, T>.toList(): List<T> =
@@ -152,10 +168,40 @@ infix fun <A, B, C, D, E, F, G> Sextuple<A, B, C, D, E, F>.to(g: G): Septuple<A,
     Septuple(this.first, this.second, this.third, this.fourth, this.fifth, this.sixth, g)
 
 infix fun <A, B, C, D, E, F, G, H> Septuple<A, B, C, D, E, F, G>.to(h: H): Octuple<A, B, C, D, E, F, G, H> =
-    Octuple(this.first, this.second, this.third, this.fourth, this.fifth, this.sixth, this.seventh, h)
+    Octuple(
+        this.first,
+        this.second,
+        this.third,
+        this.fourth,
+        this.fifth,
+        this.sixth,
+        this.seventh,
+        h
+    )
 
 infix fun <A, B, C, D, E, F, G, H, I> Octuple<A, B, C, D, E, F, G, H>.to(i: I): Nonuple<A, B, C, D, E, F, G, H, I> =
-    Nonuple(this.first, this.second, this.third, this.fourth, this.fifth, this.sixth, this.seventh, this.eighth, i)
+    Nonuple(
+        this.first,
+        this.second,
+        this.third,
+        this.fourth,
+        this.fifth,
+        this.sixth,
+        this.seventh,
+        this.eighth,
+        i
+    )
 
 infix fun <A, B, C, D, E, F, G, H, I, J> Nonuple<A, B, C, D, E, F, G, H, I>.to(j: J): Decuple<A, B, C, D, E, F, G, H, I, J> =
-    Decuple(this.first, this.second, this.third, this.fourth, this.fifth, this.sixth, this.seventh, this.eighth, this.ninth, j)
+    Decuple(
+        this.first,
+        this.second,
+        this.third,
+        this.fourth,
+        this.fifth,
+        this.sixth,
+        this.seventh,
+        this.eighth,
+        this.ninth,
+        j
+    )

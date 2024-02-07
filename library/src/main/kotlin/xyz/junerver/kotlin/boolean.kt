@@ -1,3 +1,5 @@
+@file: JvmName("-boolean")
+
 package xyz.junerver.kotlin
 
 import kotlin.contracts.ExperimentalContracts
