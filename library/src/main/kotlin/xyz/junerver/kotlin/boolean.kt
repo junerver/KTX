@@ -3,6 +3,8 @@ package xyz.junerver.kotlin
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
 
 /**
  * Description: 针对布尔值的相关扩展拆分
@@ -23,6 +25,8 @@ fun toBoolean(value: Any?): Boolean {
         is String -> value.isNotEmpty() && value != "false" && value != "null" //空字符、'false'、'null'
         is Array<*> -> value.size > 0 //数组、集合必须有元素
         is Collection<*> -> value.isNotEmpty()
+        is Map<*, *> -> value.isNotEmpty()
+        is Duration -> value.toLong(DurationUnit.MILLISECONDS) > 0//如果是时间，时间大于0
         else -> true
     }
 }
