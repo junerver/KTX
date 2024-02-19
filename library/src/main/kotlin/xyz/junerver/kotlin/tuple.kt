@@ -21,6 +21,8 @@ typealias Tuple8<A, B, C, D, E, F, G, H> = Octuple<A, B, C, D, E, F, G, H>
 typealias Tuple9<A, B, C, D, E, F, G, H, I> = Nonuple<A, B, C, D, E, F, G, H, I>
 typealias Tuple10<A, B, C, D, E, F, G, H, I, J> = Decuple<A, B, C, D, E, F, G, H, I, J>
 
+interface Tuple : Serializable
+
 /**
  * 四个数据的元组类型
  */
@@ -29,7 +31,7 @@ data class Quadruple<out A, out B, out C, out D>(
     val second: B,
     val third: C,
     val fourth: D
-) : Serializable {
+) : Tuple {
     public override fun toString(): String = "($first, $second, $third, $fourth)"
 }
 
@@ -44,7 +46,7 @@ data class Quintuple<out A, out B, out C, out D, out E>(
     val third: C,
     val fourth: D,
     val fifth: E
-) : Serializable {
+) : Tuple {
     public override fun toString(): String = "($first, $second, $third, $fourth, $fifth)"
 }
 
@@ -61,7 +63,7 @@ data class Sextuple<out A, out B, out C, out D, out E, out F>(
     val fourth: D,
     val fifth: E,
     val sixth: F
-) : Serializable {
+) : Tuple {
     public override fun toString(): String = "($first, $second, $third, $fourth, $fifth, $sixth)"
 }
 
@@ -79,7 +81,7 @@ data class Septuple<out A, out B, out C, out D, out E, out F, out G>(
     val fifth: E,
     val sixth: F,
     val seventh: G
-) : Serializable {
+) : Tuple {
     public override fun toString(): String =
         "($first, $second, $third, $fourth, $fifth, $sixth, $seventh)"
 }
@@ -99,7 +101,7 @@ data class Octuple<out A, out B, out C, out D, out E, out F, out G, out H>(
     val sixth: F,
     val seventh: G,
     val eighth: H
-) : Serializable {
+) : Tuple {
     public override fun toString(): String =
         "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth)"
 }
@@ -120,7 +122,7 @@ data class Nonuple<out A, out B, out C, out D, out E, out F, out G, out H, out I
     val seventh: G,
     val eighth: H,
     val ninth: I
-) : Serializable {
+) : Tuple {
     public override fun toString(): String =
         "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth)"
 }
@@ -142,7 +144,7 @@ data class Decuple<out A, out B, out C, out D, out E, out F, out G, out H, out I
     val eighth: H,
     val ninth: I,
     val tenth: J
-) : Serializable {
+) : Tuple {
     public override fun toString(): String =
         "($first, $second, $third, $fourth, $fifth, $sixth, $seventh, $eighth, $ninth, $tenth)"
 }
@@ -205,3 +207,138 @@ infix fun <A, B, C, D, E, F, G, H, I, J> Nonuple<A, B, C, D, E, F, G, H, I>.to(j
         this.ninth,
         j
     )
+
+public operator fun <A, B, C> Pair<A, B>.plus(c: C): Triple<A, B, C> =
+    Triple(this.first, this.second, c)
+
+public operator fun <A, B, C, D> Triple<A, B, C>.plus(d: D): Tuple4<A, B, C, D> =
+    Tuple4(this.first, this.second, this.third, d)
+
+public operator fun <A, B, C, D, E> Tuple4<A, B, C, D>.plus(e: E): Tuple5<A, B, C, D, E> =
+    Tuple5(this.first, this.second, this.third, this.fourth, e)
+
+public operator fun <A, B, C, D, E, F> Tuple5<A, B, C, D, E>.plus(f: F): Tuple6<A, B, C, D, E, F> =
+    Tuple6(this.first, this.second, this.third, this.fourth, this.fifth, f)
+
+public operator fun <A, B, C, D, E, F, G> Tuple6<A, B, C, D, E, F>.plus(g: G): Tuple7<A, B, C, D, E, F, G> =
+    Tuple7(this.first, this.second, this.third, this.fourth, this.fifth, this.sixth, g)
+
+public operator fun <A, B, C, D, E, F, G, H> Tuple7<A, B, C, D, E, F, G>.plus(h: H): Tuple8<A, B, C, D, E, F, G, H> =
+    Tuple8(
+        this.first,
+        this.second,
+        this.third,
+        this.fourth,
+        this.fifth,
+        this.sixth,
+        this.seventh,
+        h
+    )
+
+public operator fun <A, B, C, D, E, F, G, H, I> Tuple8<A, B, C, D, E, F, G, H>.plus(i: I): Tuple9<A, B, C, D, E, F, G, H, I> =
+    Tuple9(
+        this.first,
+        this.second,
+        this.third,
+        this.fourth,
+        this.fifth,
+        this.sixth,
+        this.seventh,
+        this.eighth,
+        i
+    )
+
+public operator fun <A, B, C, D, E, F, G, H, I, J> Tuple9<A, B, C, D, E, F, G, H, I>.plus(j: J): Tuple10<A, B, C, D, E, F, G, H, I, J> =
+    Tuple10(
+        this.first,
+        this.second,
+        this.third,
+        this.fourth,
+        this.fifth,
+        this.sixth,
+        this.seventh,
+        this.eighth,
+        this.ninth,
+        j
+    )
+
+
+inline fun <reified A, reified B> tuple(first: A, second: B): Tuple2<A, B> =
+    Tuple2(first, second)
+
+inline fun <reified A, reified B, reified C> tuple(first: A, second: B, third: C): Tuple3<A, B, C> =
+    Tuple3(first, second, third)
+
+inline fun <reified A, reified B, reified C, reified D> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D
+): Tuple4<A, B, C, D> =
+    Tuple4(first, second, third, fourth)
+
+inline fun <reified A, reified B, reified C, reified D, reified E> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D,
+    fifth: E
+): Tuple5<A, B, C, D, E> = Tuple5(first, second, third, fourth, fifth)
+
+inline fun <reified A, reified B, reified C, reified D, reified E, reified F> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D,
+    fifth: E,
+    sixth: F
+): Tuple6<A, B, C, D, E, F> = Tuple6(first, second, third, fourth, fifth, sixth)
+
+inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D,
+    fifth: E,
+    sixth: F,
+    seventh: G
+): Tuple7<A, B, C, D, E, F, G> = Tuple7(first, second, third, fourth, fifth, sixth, seventh)
+
+inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G, reified H> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D,
+    fifth: E,
+    sixth: F,
+    seventh: G,
+    eighth: H
+): Tuple8<A, B, C, D, E, F, G, H> =
+    Tuple8(first, second, third, fourth, fifth, sixth, seventh, eighth)
+
+inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G, reified H, reified I> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D,
+    fifth: E,
+    sixth: F,
+    seventh: G,
+    eighth: H,
+    ninth: I
+): Tuple9<A, B, C, D, E, F, G, H, I> =
+    Tuple9(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)
+
+inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G, reified H, reified I, reified J> tuple(
+    first: A,
+    second: B,
+    third: C,
+    fourth: D,
+    fifth: E,
+    sixth: F,
+    seventh: G,
+    eighth: H,
+    ninth: I,
+    tenth: J
+): Tuple10<A, B, C, D, E, F, G, H, I, J> =
+    Tuple10(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth)

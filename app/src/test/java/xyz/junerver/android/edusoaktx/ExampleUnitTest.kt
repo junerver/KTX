@@ -14,6 +14,7 @@ import org.robolectric.RobolectricTestRunner
 import xyz.junerver.kotlin.toBoolean
 import xyz.junerver.kotlin.BuildUtil
 import xyz.junerver.kotlin.ColorX
+import xyz.junerver.kotlin.Tuple
 import xyz.junerver.kotlin.Tuple4
 import xyz.junerver.kotlin.are
 import xyz.junerver.kotlin.arrow.toEither
@@ -39,6 +40,7 @@ import xyz.junerver.kotlin.toBase64
 import xyz.junerver.kotlin.toColorX
 import xyz.junerver.kotlin.toHex
 import xyz.junerver.kotlin.toPartialFunction
+import xyz.junerver.kotlin.tuple
 import xyz.junerver.kotlin.`：`
 import xyz.junerver.kotlin.`？`
 import java.io.File
@@ -78,12 +80,14 @@ class ExampleUnitTest {
 
     @Test
     fun testTuples() {
-        val p = "p" to 2
-        val t = "t" to 3 to 5
-        val d = "d" to 3 to 5 to 9
+        val p = "p" + 2
+        val t = ("t" to 3) + 5
+        val d = ("d" to 3) + 5 + 9
+        val f: Tuple = tuple("f", 2, 5, "6", "9")
         println(p)
         println(t)
         println(d)
+        println(f)
         val (a, b, c) = with(d) { Tuple4(first, second, third, fourth) }
         println("$a,$b,$c")
     }
