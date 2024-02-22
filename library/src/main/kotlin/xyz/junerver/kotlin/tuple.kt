@@ -4,13 +4,8 @@ package xyz.junerver.kotlin
 
 import java.io.Serializable
 
-/**
- * Description: 扩展元组
- * @author Junerver
- * date: 2024/2/7-13:23
- * Email: junerver@gmail.com
- * Version: v1.0
- */
+
+//region 类型别名，不应该用这个名称
 typealias Tuple2<A, B> = Pair<A, B>
 typealias Tuple3<A, B, C> = Triple<A, B, C>
 typealias Tuple4<A, B, C, D> = Quadruple<A, B, C, D>
@@ -21,8 +16,10 @@ typealias Tuple8<A, B, C, D, E, F, G, H> = Octuple<A, B, C, D, E, F, G, H>
 typealias Tuple9<A, B, C, D, E, F, G, H, I> = Nonuple<A, B, C, D, E, F, G, H, I>
 typealias Tuple10<A, B, C, D, E, F, G, H, I, J> = Decuple<A, B, C, D, E, F, G, H, I, J>
 
+//endregion
 interface Tuple : Serializable
 
+//region 元组类与扩展函数
 /**
  * 四个数据的元组类型
  */
@@ -261,8 +258,10 @@ public operator fun <A, B, C, D, E, F, G, H, I, J> Tuple9<A, B, C, D, E, F, G, H
         this.ninth,
         j
     )
+//endregion
 
 
+//region tuple函数
 inline fun <reified A, reified B> tuple(first: A, second: B): Tuple2<A, B> =
     Tuple2(first, second)
 
@@ -342,3 +341,4 @@ inline fun <reified A, reified B, reified C, reified D, reified E, reified F, re
     tenth: J
 ): Tuple10<A, B, C, D, E, F, G, H, I, J> =
     Tuple10(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth)
+//endregion
