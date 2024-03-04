@@ -4,10 +4,10 @@
 
 package xyz.junerver.kotlin
 
-import java.io.Serializable
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 const val TAG = "Junerver - KTX"
@@ -73,6 +73,7 @@ public inline fun <T, R> T.runUnless(condition: Boolean = true, noinline block: 
  * 一个返回Unit的扩展函数，只保障闭包执行，可以看成是无返回值的 [let] 函数，
  * 在一些需要函数返回值的场景可以用来替代显式书写的[Unit]。
  */
+@OptIn(ExperimentalContracts::class)
 public inline fun <T> T.then(block: (T) -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -84,9 +85,10 @@ public inline fun <T> T.then(block: (T) -> Unit) {
 /**
  * 打印泛型
  */
-inline fun <reified T> printType(@Suppress("UNUSED_PARAMETER") t: T) {
+inline fun <reified T> printType(@Suppress("UNUSED_PARAMETER") t: T): KType {
     val type = typeOf<T>()
-    println(type)
+    println("$TAG:${t.hashCode()} type:$type")
+    return type
 }
 
 /**

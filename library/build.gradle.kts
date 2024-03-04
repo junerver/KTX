@@ -20,6 +20,9 @@ android {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.11.1")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     api("io.arrow-kt:arrow-core:1.2.0-RC")
     api("androidx.core:core-ktx:1.10.1")
