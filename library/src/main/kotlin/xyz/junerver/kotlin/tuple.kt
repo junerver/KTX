@@ -37,6 +37,33 @@ data class Single<out A>(
 
 public fun <T> Single<T>.toList(): List<T> = listOf(first)
 
+public data class Pair<out A, out B>(
+    public val first: A,
+    public val second: B
+) :Tuple {
+    public override fun toString(): String = "($first, $second)"
+}
+
+public infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
+
+public fun <T> kotlin.Pair<T, T>.toList(): List<T> = listOf(first, second)
+
+
+public data class Triple<out A, out B, out C>(
+    public val first: A,
+    public val second: B,
+    public val third: C
+) :Tuple {
+    public override fun toString(): String = "($first, $second, $third)"
+}
+
+/**
+ * Converts this triple into a list.
+ * @sample samples.misc.Tuples.tripleToList
+ */
+public fun <T> Triple<T, T, T>.toList(): List<T> = listOf(first, second, third)
+
+
 /**
  * 四个数据的元组类型
  */
