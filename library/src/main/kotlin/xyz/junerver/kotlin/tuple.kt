@@ -6,6 +6,7 @@ import java.io.Serializable
 
 
 //region 类型别名，不应该用这个名称
+typealias Tuple0 = None
 typealias Tuple1<A> = Single<A>
 typealias Tuple2<A, B> = Pair<A, B>
 typealias Tuple3<A, B, C> = Triple<A, B, C>
@@ -21,6 +22,13 @@ typealias Tuple10<A, B, C, D, E, F, G, H, I, J> = Decuple<A, B, C, D, E, F, G, H
 interface Tuple : Serializable
 
 //region 元组类与扩展函数
+object None : Tuple {
+    private fun readResolve(): Any = None
+}
+
+public fun <T> None.toList(): List<T> = emptyList()
+
+
 data class Single<out A>(
     val first: A
 ) : Tuple {
@@ -273,6 +281,8 @@ public operator fun <A, B, C, D, E, F, G, H, I, J> Tuple9<A, B, C, D, E, F, G, H
 
 
 //region tuple函数
+fun tuple() = None
+
 inline fun <reified A> tuple(first: A): Tuple1<A> =
     Tuple1(first)
 
