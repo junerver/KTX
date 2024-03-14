@@ -6,6 +6,7 @@ import java.io.Serializable
 
 
 //region 类型别名，不应该用这个名称
+typealias Tuple1<A> = Single<A>
 typealias Tuple2<A, B> = Pair<A, B>
 typealias Tuple3<A, B, C> = Triple<A, B, C>
 typealias Tuple4<A, B, C, D> = Quadruple<A, B, C, D>
@@ -20,6 +21,14 @@ typealias Tuple10<A, B, C, D, E, F, G, H, I, J> = Decuple<A, B, C, D, E, F, G, H
 interface Tuple : Serializable
 
 //region 元组类与扩展函数
+data class Single<out A>(
+    val first: A
+) : Tuple {
+    public override fun toString(): String = "($first)"
+}
+
+public fun <T> Single<T>.toList(): List<T> = listOf(first)
+
 /**
  * 四个数据的元组类型
  */
@@ -152,6 +161,8 @@ public fun <T> Decuple<T, T, T, T, T, T, T, T, T, T>.toList(): List<T> =
 /**
  * 元组扩展，可以使用 `a to b to c` 这样的连续中缀函数创建更多元素的元组
  */
+infix fun <A, B> Single<A>.to(b: B): Pair<A, B> = Pair(this.first, b)
+
 infix fun <A, B, C> Pair<A, B>.to(c: C): Triple<A, B, C> = Triple(this.first, this.second, c)
 
 infix fun <A, B, C, D> Triple<A, B, C>.to(d: D): Quadruple<A, B, C, D> =
@@ -262,6 +273,9 @@ public operator fun <A, B, C, D, E, F, G, H, I, J> Tuple9<A, B, C, D, E, F, G, H
 
 
 //region tuple函数
+inline fun <reified A> tuple(first: A): Tuple1<A> =
+    Tuple1(first)
+
 inline fun <reified A, reified B> tuple(first: A, second: B): Tuple2<A, B> =
     Tuple2(first, second)
 
