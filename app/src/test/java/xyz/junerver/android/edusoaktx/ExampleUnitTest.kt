@@ -15,6 +15,7 @@ import xyz.junerver.kotlin.toBoolean
 import xyz.junerver.kotlin.BuildUtil
 import xyz.junerver.kotlin.ColorX
 import xyz.junerver.kotlin.Tuple
+import xyz.junerver.kotlin.Tuple3
 import xyz.junerver.kotlin.Tuple4
 import xyz.junerver.kotlin.are
 import xyz.junerver.kotlin.arrow.toEither
@@ -27,6 +28,7 @@ import xyz.junerver.kotlin.getBuildConfigValue
 import xyz.junerver.kotlin.ifTrue
 import xyz.junerver.kotlin.lazy.ManagedResettableLazy
 import xyz.junerver.kotlin.lazy.managedLazy
+import xyz.junerver.kotlin.lazy.resettableLazy
 import xyz.junerver.kotlin.lazy.resettableManager
 import xyz.junerver.kotlin.md5
 import xyz.junerver.kotlin.padLeft
@@ -40,6 +42,7 @@ import xyz.junerver.kotlin.toBase64
 import xyz.junerver.kotlin.toColorX
 import xyz.junerver.kotlin.toHex
 import xyz.junerver.kotlin.toPartialFunction
+import xyz.junerver.kotlin.tp
 import xyz.junerver.kotlin.tuple
 import xyz.junerver.kotlin.`：`
 import xyz.junerver.kotlin.`？`
@@ -90,6 +93,9 @@ class ExampleUnitTest {
         println(f)
         val (a, b, c) = with(d) { Tuple4(first, second, third, fourth) }
         println("$a,$b,$c")
+
+        val s = tp[1,",",4,"asdas",5]
+        println(s)
     }
 
     @Test
@@ -123,7 +129,7 @@ class ExampleUnitTest {
     @Test
     fun testColor() {
         val hex = ColorX("#ff0080")
-        val rgb = Triple(255, 128, 0)
+        val rgb = Tuple3(255, 128, 0)
         println(rgb.toColorX().toColor())
         println(rgb.toColorX())
         assertEquals(rgb.toColorX().toColor(), Color.rgb(255, 128, 0))
@@ -434,21 +440,21 @@ class ExampleUnitTest {
 
     @Test
     fun testLazy() {
-//        val resettableDelegate = resettableLazy {
-//            Event(1,"2"+ Random(1))
-//        }
-//        val readOnly by resettableDelegate
-//        println(readOnly)
-//        //通过delegate对象实现reset，从而再次调用初始化函数
-//        resettableDelegate.reset()
-//        println(readOnly)
-//
-//        val bean by managedLazy { Event(1, "2" + Random(1)) }
-//        println(bean)
-//        println(bean)
-//        //默认管理器时，通过单例函数重置
-//        ManagedResettableLazy.reset()
-//        println(bean)
+        val resettableDelegate = resettableLazy {
+            Event(1,"2"+ Random(1))
+        }
+        val readOnly by resettableDelegate
+        println(readOnly)
+        //通过delegate对象实现reset，从而再次调用初始化函数
+        resettableDelegate.reset()
+        println(readOnly)
+
+        val bean by managedLazy { Event(1, "2" + Random(1)) }
+        println(bean)
+        println(bean)
+        //默认管理器时，通过单例函数重置
+        ManagedResettableLazy.reset()
+        println(bean)
 
         val m = resettableManager()
         val bean1 by managedLazy(m) { Event(1, "2" + Random(1)) }
@@ -458,7 +464,6 @@ class ExampleUnitTest {
         println(bean2)
         println(bean2)
         m.reset()
-        ManagedResettableLazy.reset()
         println(bean1)
         println(bean2)
 

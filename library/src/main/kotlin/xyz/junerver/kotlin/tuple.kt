@@ -21,9 +21,28 @@ typealias Tuple10<A, B, C, D, E, F, G, H, I, J> = Decuple<A, B, C, D, E, F, G, H
 //endregion
 interface Tuple : Serializable
 
+typealias tp = None
+
 //region 元组类与扩展函数
 object None : Tuple {
-    private fun readResolve(): Any = None
+    operator fun get(vararg elements: Any): Tuple{
+        return with(elements) {
+            when (size) {
+                0 -> None
+                1-> tuple(get(0))
+                2-> tuple(get(0),get(1))
+                3 -> tuple(get(0), get(1), get(2))
+                4 -> tuple(get(0), get(1), get(2), get(3))
+                5 -> tuple(get(0), get(1), get(2), get(3), get(4))
+                6 -> tuple(get(0), get(1), get(2), get(3), get(4), get(5))
+                7 -> tuple(get(0), get(1), get(2), get(3), get(4), get(5), get(6))
+                8 -> tuple(get(0), get(1), get(2), get(3), get(4), get(5), get(6), get(7))
+                9 -> tuple(get(0), get(1), get(2), get(3), get(4), get(5), get(6), get(7), get(8))
+                10 -> tuple(get(0), get(1), get(2), get(3), get(4), get(5), get(6), get(7), get(8),get(9))
+                else -> {error("too much tuples")}
+            }
+        }
+    }
 }
 
 public fun <T> None.toList(): List<T> = emptyList()
@@ -40,7 +59,7 @@ public fun <T> Single<T>.toList(): List<T> = listOf(first)
 public data class Pair<out A, out B>(
     public val first: A,
     public val second: B
-) :Tuple {
+) : Tuple {
     public override fun toString(): String = "($first, $second)"
 }
 
@@ -53,20 +72,19 @@ public data class Triple<out A, out B, out C>(
     public val first: A,
     public val second: B,
     public val third: C
-) :Tuple {
+) : Tuple {
     public override fun toString(): String = "($first, $second, $third)"
 }
 
 /**
  * Converts this triple into a list.
+ *
  * @sample samples.misc.Tuples.tripleToList
  */
 public fun <T> Triple<T, T, T>.toList(): List<T> = listOf(first, second, third)
 
 
-/**
- * 四个数据的元组类型
- */
+/** 四个数据的元组类型 */
 data class Quadruple<out A, out B, out C, out D>(
     val first: A,
     val second: B,
@@ -78,9 +96,7 @@ data class Quadruple<out A, out B, out C, out D>(
 
 public fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
 
-/**
- * 五个数据的元组类型
- */
+/** 五个数据的元组类型 */
 data class Quintuple<out A, out B, out C, out D, out E>(
     val first: A,
     val second: B,
@@ -94,9 +110,7 @@ data class Quintuple<out A, out B, out C, out D, out E>(
 public fun <T> Quintuple<T, T, T, T, T>.toList(): List<T> =
     listOf(first, second, third, fourth, fifth)
 
-/**
- * 六个数据的元组类型
- */
+/** 六个数据的元组类型 */
 data class Sextuple<out A, out B, out C, out D, out E, out F>(
     val first: A,
     val second: B,
@@ -111,9 +125,7 @@ data class Sextuple<out A, out B, out C, out D, out E, out F>(
 public fun <T> Sextuple<T, T, T, T, T, T>.toList(): List<T> =
     listOf(first, second, third, fourth, fifth, sixth)
 
-/**
- * 七个数据的元组类型
- */
+/** 七个数据的元组类型 */
 data class Septuple<out A, out B, out C, out D, out E, out F, out G>(
     val first: A,
     val second: B,
@@ -130,9 +142,7 @@ data class Septuple<out A, out B, out C, out D, out E, out F, out G>(
 public fun <T> Septuple<T, T, T, T, T, T, T>.toList(): List<T> =
     listOf(first, second, third, fourth, fifth, sixth, seventh)
 
-/**
- * 八个数据的元组类型
- */
+/** 八个数据的元组类型 */
 data class Octuple<out A, out B, out C, out D, out E, out F, out G, out H>(
     val first: A,
     val second: B,
@@ -150,9 +160,7 @@ data class Octuple<out A, out B, out C, out D, out E, out F, out G, out H>(
 public fun <T> Octuple<T, T, T, T, T, T, T, T>.toList(): List<T> =
     listOf(first, second, third, fourth, fifth, sixth, seventh, eighth)
 
-/**
- * 九个数据的元组类型
- */
+/** 九个数据的元组类型 */
 data class Nonuple<out A, out B, out C, out D, out E, out F, out G, out H, out I>(
     val first: A,
     val second: B,
@@ -171,9 +179,7 @@ data class Nonuple<out A, out B, out C, out D, out E, out F, out G, out H, out I
 public fun <T> Nonuple<T, T, T, T, T, T, T, T, T>.toList(): List<T> =
     listOf(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)
 
-/**
- * 十个数据的元组类型
- */
+/** 十个数据的元组类型 */
 data class Decuple<out A, out B, out C, out D, out E, out F, out G, out H, out I, out J>(
     val first: A,
     val second: B,
@@ -193,9 +199,7 @@ data class Decuple<out A, out B, out C, out D, out E, out F, out G, out H, out I
 public fun <T> Decuple<T, T, T, T, T, T, T, T, T, T>.toList(): List<T> =
     listOf(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth)
 
-/**
- * 元组扩展，可以使用 `a to b to c` 这样的连续中缀函数创建更多元素的元组
- */
+/** 元组扩展，可以使用 `a to b to c` 这样的连续中缀函数创建更多元素的元组 */
 infix fun <A, B> Single<A>.to(b: B): Pair<A, B> = Pair(this.first, b)
 
 infix fun <A, B, C> Pair<A, B>.to(c: C): Triple<A, B, C> = Triple(this.first, this.second, c)
@@ -310,16 +314,16 @@ public operator fun <A, B, C, D, E, F, G, H, I, J> Tuple9<A, B, C, D, E, F, G, H
 //region tuple函数
 fun tuple() = None
 
-inline fun <reified A> tuple(first: A): Tuple1<A> =
+fun <A> tuple(first: A): Tuple1<A> =
     Tuple1(first)
 
-inline fun <reified A, reified B> tuple(first: A, second: B): Tuple2<A, B> =
+fun <A, B> tuple(first: A, second: B): Tuple2<A, B> =
     Tuple2(first, second)
 
-inline fun <reified A, reified B, reified C> tuple(first: A, second: B, third: C): Tuple3<A, B, C> =
+fun <A, B, C> tuple(first: A, second: B, third: C): Tuple3<A, B, C> =
     Tuple3(first, second, third)
 
-inline fun <reified A, reified B, reified C, reified D> tuple(
+fun <A, B, C, D> tuple(
     first: A,
     second: B,
     third: C,
@@ -327,7 +331,7 @@ inline fun <reified A, reified B, reified C, reified D> tuple(
 ): Tuple4<A, B, C, D> =
     Tuple4(first, second, third, fourth)
 
-inline fun <reified A, reified B, reified C, reified D, reified E> tuple(
+fun <A, B, C, D, E> tuple(
     first: A,
     second: B,
     third: C,
@@ -335,7 +339,7 @@ inline fun <reified A, reified B, reified C, reified D, reified E> tuple(
     fifth: E
 ): Tuple5<A, B, C, D, E> = Tuple5(first, second, third, fourth, fifth)
 
-inline fun <reified A, reified B, reified C, reified D, reified E, reified F> tuple(
+fun <A, B, C, D, E, F> tuple(
     first: A,
     second: B,
     third: C,
@@ -344,7 +348,7 @@ inline fun <reified A, reified B, reified C, reified D, reified E, reified F> tu
     sixth: F
 ): Tuple6<A, B, C, D, E, F> = Tuple6(first, second, third, fourth, fifth, sixth)
 
-inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G> tuple(
+fun <A, B, C, D, E, F, G> tuple(
     first: A,
     second: B,
     third: C,
@@ -354,7 +358,7 @@ inline fun <reified A, reified B, reified C, reified D, reified E, reified F, re
     seventh: G
 ): Tuple7<A, B, C, D, E, F, G> = Tuple7(first, second, third, fourth, fifth, sixth, seventh)
 
-inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G, reified H> tuple(
+fun <A, B, C, D, E, F, G, H> tuple(
     first: A,
     second: B,
     third: C,
@@ -366,7 +370,7 @@ inline fun <reified A, reified B, reified C, reified D, reified E, reified F, re
 ): Tuple8<A, B, C, D, E, F, G, H> =
     Tuple8(first, second, third, fourth, fifth, sixth, seventh, eighth)
 
-inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G, reified H, reified I> tuple(
+fun <A, B, C, D, E, F, G, H, I> tuple(
     first: A,
     second: B,
     third: C,
@@ -379,7 +383,7 @@ inline fun <reified A, reified B, reified C, reified D, reified E, reified F, re
 ): Tuple9<A, B, C, D, E, F, G, H, I> =
     Tuple9(first, second, third, fourth, fifth, sixth, seventh, eighth, ninth)
 
-inline fun <reified A, reified B, reified C, reified D, reified E, reified F, reified G, reified H, reified I, reified J> tuple(
+fun <A, B, C, D, E, F, G, H, I, J> tuple(
     first: A,
     second: B,
     third: C,
