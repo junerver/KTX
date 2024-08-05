@@ -74,6 +74,9 @@ inline val Long.tsMs: Timestamp get() = Timestamp(value = this)
 
 inline val Long.tsS: Timestamp get() = Timestamp(value = this * 1000)
 
+public fun Timestamp.toInstant(timeZone: TimeZone = TimeZone.currentSystemDefault()): Instant =
+    Instant.fromEpochMilliseconds(this.value)
+
 public fun Timestamp.toLocalDateTime(timeZone: TimeZone = TimeZone.currentSystemDefault()): LocalDateTime =
     Instant.fromEpochMilliseconds(this.value).toLocalDateTime(timeZone)
 
@@ -82,3 +85,24 @@ public val DayOfWeekNames.Companion.CHINESE_FULL: DayOfWeekNames
 
 public val DayOfWeekNames.Companion.CHINESE_ABBREVIATED: DayOfWeekNames
     get() = DayOfWeekNames("周一", "周二", "周三", "周四", "周五", "周六", "周日")
+
+public fun createFormat(
+    yM: String = "-",
+    mD: String = "-",
+    dH: String = " ",
+    hM: String = ":",
+    mS: String = ":"
+) =
+    LocalDateTime.Format {
+        year()
+        chars(yM)
+        monthNumber()
+        chars(mD)
+        dayOfMonth()
+        chars(dH)
+        hour()
+        chars(hM)
+        minute()
+        chars(mS)
+        second()
+    }
