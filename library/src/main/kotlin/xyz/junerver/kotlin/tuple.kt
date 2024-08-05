@@ -25,6 +25,7 @@ typealias tp = None
 
 //region 元组类与扩展函数
 object None : Tuple {
+    private fun readResolve(): Any = None
     operator fun get(vararg elements: Any): Tuple{
         return with(elements) {
             when (size) {

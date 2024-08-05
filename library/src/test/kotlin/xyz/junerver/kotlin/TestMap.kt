@@ -4,6 +4,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import kotlin.to
+import xyz.junerver.kotlin.copy
 
 /**
  * Description:

@@ -19,6 +19,18 @@ android {
     }
 }
 
+kotlin {
+//    // for strict mode
+//    explicitApi()
+//    // or
+//    explicitApi = ExplicitApiMode.Strict
+
+    // for warning mode
+    explicitApiWarning()
+    // or
+//    explicitApi = ExplicitApiMode.Warning
+}
+
 dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.11.1")
@@ -30,4 +42,5 @@ dependencies {
     //kotlin 协程
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    api("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 }
