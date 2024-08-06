@@ -1,3 +1,5 @@
+@file: JvmName("-map")
+
 package xyz.junerver.kotlin
 
 /**
