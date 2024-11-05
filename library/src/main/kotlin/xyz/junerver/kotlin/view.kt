@@ -3,6 +3,8 @@
 package xyz.junerver.kotlin
 
 
+import android.graphics.Rect
+import android.view.TouchDelegate
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.getSystemService
@@ -89,6 +91,8 @@ infix fun View.visibleOrInIf(condition: Boolean) =
 
 infix fun View.visibleOrGoneIf(condition: Boolean) = if (condition) this.visible() else this.gone()
 
+//endregion
+
 /**
  * 强制打开输入软键盘
  */
@@ -96,5 +100,32 @@ fun View.showKeyboardForced() {
     val imm:InputMethodManager? = this.context.getSystemService()
     imm?.showSoftInput(this, InputMethodManager.SHOW_FORCED)
 }
-
-//endregion
+/**
+ * 扩展方法，扩大点击区域
+ * NOTE: 需要保证目标targetView有父View，否则无法扩大点击区域
+ *
+ * @param expandSize 扩大的大小，单位px
+ *
+ * ```kotlin
+ * private val tvExpandTouch: TextView by id(R.id.tv_view_delegate)
+ *
+ * tvExpandTouch.run {
+ *     expandTouchView(50) //扩大点击区域
+ *     setOnClickListener {
+ *          showToast("通过TouchDelegate扩大点击区域")
+ *     }
+ * }
+ * ```
+ */
+fun View.expandTouchView(expandSize: Int = dp2px(10f).toInt()) {
+    val parentView = (parent as? View)
+    parentView?.post {
+        val rect = Rect()
+        getHitRect(rect) //getHitRect(rect)将视图在父容器中所占据的区域存储到rect中。
+        rect.left -= expandSize
+        rect.top -= expandSize
+        rect.right += expandSize
+        rect.bottom += expandSize
+        parentView.touchDelegate = TouchDelegate(rect, this)
+    }
+}
