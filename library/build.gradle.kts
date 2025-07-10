@@ -7,6 +7,7 @@ plugins {
 
 android {
     compileSdk = 33
+    namespace = "xyz.junerver.kotlin"
     defaultConfig {
         minSdk = 21
     }
